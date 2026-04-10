@@ -280,6 +280,101 @@
     padding: 12px 16px; border-top: 1px solid var(--border);
     font-size: 11px; color: var(--text-3); text-align: center;
   }
+
+  /* v0.2: Workflow template chips */
+  .templates-row {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .template-chip {
+    background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2);
+    padding: 5px 10px; border-radius: 14px; font-size: 11px; cursor: pointer;
+    transition: all .12s; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .template-chip:hover { border-color: var(--accent); color: var(--text-1); background: rgba(99,102,241,.1); }
+  .template-chip .chip-band { font-size: 9px; padding: 0 5px; border-radius: 8px; font-weight: 600; }
+
+  /* v0.2: Filter pills + search */
+  .jobs-toolbar {
+    display: flex; align-items: center; gap: 8px; padding: 12px 20px 6px;
+    border-bottom: 1px solid var(--border); background: var(--bg);
+  }
+  .filter-pill {
+    background: var(--bg-2); border: 1px solid var(--border); color: var(--text-2);
+    padding: 5px 12px; border-radius: 14px; font-size: 11px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .filter-pill:hover { color: var(--text-1); border-color: var(--accent); }
+  .filter-pill.active { background: rgba(99,102,241,.15); border-color: var(--accent); color: var(--text-1); }
+  .filter-pill .count {
+    background: var(--bg-3); color: var(--text-2); padding: 0 6px;
+    border-radius: 9px; font-size: 10px; font-weight: 600;
+  }
+  .filter-pill.active .count { background: var(--accent); color: white; }
+  .search-input {
+    flex: 1; max-width: 240px; margin-left: auto;
+    background: var(--bg-2); border: 1px solid var(--border); color: var(--text-1);
+    padding: 6px 12px; border-radius: 14px; font-size: 12px;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent); }
+
+  /* v0.2: Cost stat */
+  .cost-stat { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+  .cost-card {
+    background: linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.05));
+    border: 1px solid rgba(99,102,241,.3);
+    border-radius: 10px; padding: 14px; margin-bottom: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cost-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); }
+  .cost-card .num { font-size: 18px; font-weight: 600; color: var(--text-1); }
+  .cost-card .ratio { color: var(--green); font-size: 13px; font-weight: 600; }
+
+  /* v0.2: Chain button */
+  .chain-btn {
+    background: var(--bg-3); border: 1px solid var(--accent); color: var(--accent);
+    padding: 7px 12px; border-radius: 8px; font-size: 11px; font-weight: 500;
+    margin-top: 10px; width: 100%; transition: all .15s;
+  }
+  .chain-btn:hover { background: var(--accent); color: white; }
+
+  /* v0.2: Mobile rail toggle */
+  .rail-toggle {
+    display: none; background: transparent; border: none;
+    color: var(--text-2); font-size: 22px; padding: 0 8px;
+  }
+
+  /* v0.2: Mobile responsive */
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    aside.rail {
+      position: fixed; top: 56px; left: 0; bottom: 0; width: 240px; z-index: 50;
+      transform: translateX(-100%); transition: transform .2s;
+      box-shadow: var(--shadow-lg);
+    }
+    aside.rail.open { transform: translateX(0); }
+    aside.detail {
+      position: fixed; top: 56px; right: 0; bottom: 0; width: 100%; max-width: 420px;
+      z-index: 50; transform: translateX(100%); transition: transform .2s;
+      box-shadow: var(--shadow-lg);
+    }
+    aside.detail.open { transform: translateX(0); }
+    .rail-toggle { display: inline-flex; align-items: center; }
+    .brand-tag { display: none; }
+    .templates-row { max-height: 64px; overflow-x: auto; flex-wrap: nowrap; }
+    .task-controls { flex-direction: column; }
+    .model-select { min-width: 100%; padding: 6px 10px; }
+    .send-btn { padding: 8px; }
+    .jobs-toolbar { flex-wrap: wrap; padding: 10px 14px; }
+    .search-input { max-width: 100%; width: 100%; margin-left: 0; margin-top: 6px; }
+    .jobs-list { padding: 10px 14px 80px; }
+    .task-input-wrap { padding: 12px 14px; }
+  }
+
+  .mobile-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+    z-index: 40;
+  }
+  .mobile-backdrop.show { display: block; }
 </style>
 </head>
 <body>
@@ -287,10 +382,11 @@
 <div id="app">
   <header class="top">
     <div class="brand">
+      <button class="rail-toggle" id="railToggle" aria-label="Menu">☰</button>
       <div class="brand-logo">⚒</div>
       <div>
         <span class="brand-text">CompanyForge</span>
-        <span class="brand-tag">— autonomous operations</span>
+        <span class="brand-tag">— autonomous operations · v0.2</span>
       </div>
     </div>
     <div class="top-right">
@@ -298,6 +394,7 @@
       <button class="icon-btn" id="settingsBtn" title="Settings">⚙</button>
     </div>
   </header>
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <main>
     <aside class="rail">
@@ -325,6 +422,14 @@
         <div class="task-hint">
           Selected: <span id="selectedCoLabel">All companies</span> · <kbd>⌘</kbd>+<kbd>Enter</kbd> to send · Band C tasks pause for your approval
         </div>
+        <div class="templates-row" id="templatesRow"></div>
+      </div>
+      <div class="jobs-toolbar">
+        <button class="filter-pill active" data-filter="all">All <span class="count" id="cnt-all">0</span></button>
+        <button class="filter-pill" data-filter="pending">⏸ Pending <span class="count" id="cnt-pending">0</span></button>
+        <button class="filter-pill" data-filter="running">⚡ Running <span class="count" id="cnt-running">0</span></button>
+        <button class="filter-pill" data-filter="failed">✕ Failed <span class="count" id="cnt-failed">0</span></button>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search jobs...">
       </div>
       <div class="jobs-list" id="jobsList"></div>
     </section>
@@ -376,8 +481,9 @@
     <label>Anthropic API key</label>
     <input type="password" id="settingsKeyInput" placeholder="sk-ant-api03-...">
     <div class="modal-footer" style="justify-content: space-between">
-      <div style="display:flex; gap: 8px">
-        <button class="btn-secondary" id="exportBtn">Export data</button>
+      <div style="display:flex; gap: 8px; flex-wrap: wrap">
+        <button class="btn-secondary" id="exportBtn">Export JSON</button>
+        <button class="btn-secondary" id="exportCsvBtn">Audit log CSV</button>
         <button class="btn-secondary" id="clearBtn" style="color: var(--red); border-color: rgba(239,68,68,.4)">Clear all</button>
       </div>
       <div style="display:flex; gap: 8px">
@@ -404,6 +510,20 @@ const STORAGE_KEYS = {
 };
 
 const HOURLY_HKD = 250;  // assumed labor cost — used for savings counter
+const USD_HKD = 7.8;     // rough peg
+
+// v0.2: Anthropic list-price (USD per million tokens) — public pricing
+const MODEL_RATES = {
+  'claude-haiku-4-5-20251001': { in: 1.00,  out: 5.00,  label: 'Haiku 4.5' },
+  'claude-sonnet-4-6':         { in: 3.00,  out: 15.00, label: 'Sonnet 4.6' },
+  'claude-opus-4-6':           { in: 15.00, out: 75.00, label: 'Opus 4.6' }
+};
+function jobCostUsd(j) {
+  const r = MODEL_RATES[j.model] || { in: 3, out: 15 };
+  const inT = (j.usage && j.usage.input) || 0;
+  const outT = (j.usage && j.usage.output) || 0;
+  return (inT * r.in + outT * r.out) / 1e6;
+}
 
 const DEFAULT_COMPANIES = [
   { slug: 'pinnacle', name: 'Pinnacle Robotics', icon: '🚁', color: '#6366f1',
@@ -431,6 +551,48 @@ const EXAMPLES = [
   { prompt: 'Sign the master services agreement with vendor X', co: null }  // Band D demo
 ];
 
+// v0.2: Workflow templates — pre-built tasks per company. Investor signal: this is a workflow library, not a chat box.
+const WORKFLOW_TEMPLATES = {
+  pinnacle: [
+    { icon: '🔍', label: 'Competitor scan',  prompt: 'Identify the top 5 commercial UAV/inspection-drone competitors active in APAC this quarter and summarize their differentiators in a markdown table.' },
+    { icon: '📋', label: 'RFP draft',        prompt: 'Draft a 1-page RFP for a 10-unit pilot deployment to a HK utility customer covering scope, deliverables, timeline, and acceptance criteria.' },
+    { icon: '⚖️', label: 'Compliance check', prompt: 'List the HK CAD and CAAS regulatory checkpoints we must clear before commercial UAV inspection operations and what evidence we need to file.' }
+  ],
+  seniordeli: [
+    { icon: '🥗', label: 'Menu planner',     prompt: 'Plan a 7-day dysphagia-safe lunch menu (IDDSI level 5 minced & moist) with HK supermarket ingredients, max HKD 35 per meal, and call out any allergens.' },
+    { icon: '💬', label: 'Customer reply',   prompt: 'Draft a warm reply to an elderly customer who is unsure which texture level (IDDSI 4 vs 5) suits their parent post-stroke.' },
+    { icon: '🏷️', label: 'Label review',     prompt: 'Review a hypothetical product label claiming "improves swallowing" and rewrite it to be HK FEHD-compliant without health claims.' }
+  ],
+  capypay: [
+    { icon: '🛡️', label: 'Risk memo',        prompt: 'Draft a 1-page memo on the top 5 AML/sanctions-screening controls a HK MSO operating GBA cross-border SME corridors must implement.' },
+    { icon: '📑', label: 'TOS rewrite',      prompt: 'Rewrite a payment-platform Terms of Service paragraph so it clearly disclaims deposit-taking and emphasizes pass-through settlement.' },
+    { icon: '🗺️', label: 'GBA corridor',     prompt: 'Compare USD-CNH-HKD settlement options for a HK SME paying a Shenzhen supplier USD 50K monthly. Show fees, T+, and FX risk for each path.' }
+  ],
+  companyforge: [
+    { icon: '🎯', label: 'Pitch teardown',   prompt: 'Tear down the CompanyForge pitch as a YC partner would: 5 sharpest objections + how to disarm each in one sentence.' },
+    { icon: '🧱', label: 'Roadmap',          prompt: 'Propose a 3-month feature roadmap for CompanyForge given the goal is YC interview readiness. Group by Now / Next / Later.' },
+    { icon: '💵', label: 'Pricing model',    prompt: 'Design a 3-tier SaaS pricing model for CompanyForge (solo founder / multi-venture / enterprise) with rough monthly USD anchors and what each tier unlocks.' }
+  ],
+  linpig: [
+    { icon: '📊', label: 'Strategy memo',    prompt: 'Outline a long/short equity strategy memo for HK small-caps with momentum + value filters and a sketch of the risk controls.' },
+    { icon: '🚨', label: 'Drawdown post',    prompt: 'Draft an internal post-mortem template for any single-day drawdown >2% covering hypothesis, what happened, what we learned, what we changed.' }
+  ],
+  pumphq: [
+    { icon: '📣', label: 'Launch teaser',    prompt: 'Write 3 teaser social posts for an unnamed early-stage venture launching in 2 weeks. Curiosity-driven, no claims.' }
+  ],
+  botzan: [
+    { icon: '🤝', label: 'Partner outreach', prompt: 'Draft a cold outreach email to a HK service-robotics integrator proposing a co-development pilot for an indoor delivery use case.' }
+  ],
+  goldrushx: [
+    { icon: '⛏️', label: 'Site checklist',   prompt: 'Build a due diligence checklist for evaluating a small-scale exploration site in SE Asia covering legal, geological, environmental, and security dimensions.' }
+  ]
+};
+const GENERIC_TEMPLATES = [
+  { icon: '📝', label: 'Daily standup',  prompt: 'Draft a 5-bullet daily standup summarizing what was done yesterday, what is planned today, and any blockers across all my ventures.' },
+  { icon: '📧', label: 'Inbox triage',   prompt: 'Given a list of email subjects, triage each as: Reply now / Reply later / Delegate / Archive — and explain the rule used.' },
+  { icon: '🧠', label: 'Decision frame', prompt: 'Frame a hard decision I am facing using a Cost / Reversibility / Optionality matrix and recommend a default action.' }
+];
+
 // ---------- State ----------
 let state = {
   tenant: null,
@@ -439,7 +601,9 @@ let state = {
   jobs: [],
   selectedCoSlug: null,  // null = all
   selectedJobId: null,
-  inFlight: new Set()
+  inFlight: new Set(),
+  jobFilter: 'all',      // v0.2: all | pending | running | failed
+  searchTerm: ''         // v0.2
 };
 
 // ---------- Persistence ----------
@@ -517,7 +681,7 @@ async function validateKey(key) {
 }
 
 // ---------- Streaming Anthropic call ----------
-async function callClaudeStream({ prompt, model, onChunk, onDone, onError }) {
+async function callClaudeStream({ prompt, model, onChunk, onDone, onError, onUsage }) {
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -556,6 +720,12 @@ async function callClaudeStream({ prompt, model, onChunk, onDone, onError }) {
           const evt = JSON.parse(data);
           if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
             onChunk(evt.delta.text);
+          } else if (evt.type === 'message_start' && evt.message && evt.message.usage) {
+            // Anthropic emits input tokens up-front
+            if (onUsage) onUsage({ input: evt.message.usage.input_tokens || 0, output: evt.message.usage.output_tokens || 0 });
+          } else if (evt.type === 'message_delta' && evt.usage) {
+            // Final output token count arrives in message_delta
+            if (onUsage) onUsage({ output: evt.usage.output_tokens || 0 });
           } else if (evt.type === 'message_stop') {
             onDone();
             return;
@@ -573,7 +743,7 @@ async function callClaudeStream({ prompt, model, onChunk, onDone, onError }) {
 }
 
 // ---------- Job pipeline ----------
-function createJob(prompt, model, companySlug) {
+function createJob(prompt, model, companySlug, parentJobId) {
   if (!prompt.trim()) return;
   const id = 'j_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
   const band = classifyBand(prompt);
@@ -583,7 +753,15 @@ function createJob(prompt, model, companySlug) {
   if (company) {
     context = '<company_context name="' + company.name + '">\n' + company.memory + '\n</company_context>\n\n';
   }
-  const fullPrompt = context + '<task>\n' + prompt + '\n</task>';
+  // v0.2: chained jobs include parent output as prior context
+  let chainContext = '';
+  if (parentJobId) {
+    const parent = state.jobs.find(x => x.id === parentJobId);
+    if (parent) {
+      chainContext = '<previous_step prompt="' + escape(parent.prompt).slice(0, 200) + '">\n' + (parent.output || '').slice(0, 4000) + '\n</previous_step>\n\n';
+    }
+  }
+  const fullPrompt = context + chainContext + '<task>\n' + prompt + '\n</task>';
 
   const job = {
     id, prompt, model, company: companySlug || null,
@@ -591,9 +769,12 @@ function createJob(prompt, model, companySlug) {
     created: new Date().toISOString(),
     completed: null,
     laborMinutes: labor,
+    parentJobId: parentJobId || null,
+    usage: { input: 0, output: 0 },
     auditLog: [{ ts: new Date().toISOString(), event: 'created', by: 'human' }]
   };
   if (company) job.auditLog.push({ ts: new Date().toISOString(), event: 'context_injected', company: companySlug });
+  if (parentJobId) job.auditLog.push({ ts: new Date().toISOString(), event: 'chained_from', parent: parentJobId });
 
   // Band D: hard-stop, never call API
   if (band === 'D') {
@@ -617,6 +798,11 @@ function createJob(prompt, model, companySlug) {
   callClaudeStream({
     prompt: fullPrompt,
     model,
+    onUsage: (u) => {
+      if (u.input != null) job.usage.input = u.input;
+      if (u.output != null) job.usage.output = u.output;
+      if (state.selectedJobId === id) renderDetail();
+    },
     onChunk: (text) => {
       job.output += text;
       // Re-render only if this job is still selected (cheap update)
@@ -647,6 +833,50 @@ function createJob(prompt, model, companySlug) {
       renderAll();
     }
   });
+}
+
+// v0.2: Chain a completed job's output into a fresh task input
+function chainJob(parentId) {
+  const parent = state.jobs.find(x => x.id === parentId);
+  if (!parent) return;
+  const inp = $('#taskInput');
+  inp.value = 'Continue from the previous step. ';
+  inp.dataset.parentId = parentId;
+  inp.style.height = 'auto';
+  inp.style.height = Math.min(inp.scrollHeight + 8, 200) + 'px';
+  inp.focus();
+  toast('Chained from job ' + parentId.slice(0, 10) + '… — type the next step');
+}
+
+// v0.2: CSV export of full audit log
+function exportCsv() {
+  const rows = [['job_id', 'created', 'completed', 'company', 'band', 'status', 'model', 'input_tokens', 'output_tokens', 'usd_cost', 'labor_min_saved', 'parent_job', 'prompt']];
+  state.jobs.forEach(j => {
+    rows.push([
+      j.id,
+      j.created || '',
+      j.completed || '',
+      j.company || '',
+      j.band,
+      j.status,
+      j.model,
+      (j.usage && j.usage.input) || 0,
+      (j.usage && j.usage.output) || 0,
+      jobCostUsd(j).toFixed(6),
+      j.laborMinutes || 0,
+      j.parentJobId || '',
+      (j.prompt || '').replace(/\r?\n/g, ' ')
+    ]);
+  });
+  const csv = rows.map(r => r.map(c => {
+    const s = String(c);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'companyforge-audit-' + state.tenant + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
 }
 
 function approveJob(id) {
@@ -733,9 +963,41 @@ function renderRail() {
 
 function renderJobsList() {
   const wrap = $('#jobsList');
-  let visible = state.jobs;
-  if (state.selectedCoSlug) visible = visible.filter(j => j.company === state.selectedCoSlug);
+  // v0.2: counts for filter pills (always over the company-scoped set)
+  let scoped = state.jobs;
+  if (state.selectedCoSlug) scoped = scoped.filter(j => j.company === state.selectedCoSlug);
+  const counts = {
+    all: scoped.length,
+    pending: scoped.filter(j => j.status === 'awaiting_approval').length,
+    running: scoped.filter(j => j.status === 'running').length,
+    failed: scoped.filter(j => j.status === 'failed').length
+  };
+  ['all', 'pending', 'running', 'failed'].forEach(k => {
+    const el = document.getElementById('cnt-' + k);
+    if (el) el.textContent = counts[k];
+  });
+  document.querySelectorAll('.filter-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.filter === state.jobFilter);
+  });
+
+  // v0.2: apply filter + search
+  let visible = scoped;
+  if (state.jobFilter === 'pending') visible = visible.filter(j => j.status === 'awaiting_approval');
+  else if (state.jobFilter === 'running') visible = visible.filter(j => j.status === 'running');
+  else if (state.jobFilter === 'failed') visible = visible.filter(j => j.status === 'failed');
+  if (state.searchTerm) {
+    const q = state.searchTerm.toLowerCase();
+    visible = visible.filter(j =>
+      (j.prompt || '').toLowerCase().includes(q) ||
+      (j.output || '').toLowerCase().includes(q));
+  }
+
   if (visible.length === 0) {
+    const isFilteredEmpty = state.searchTerm || state.jobFilter !== 'all';
+    if (isFilteredEmpty) {
+      wrap.innerHTML = `<div class="jobs-empty"><div style="font-size:36px">🔍</div><h3>No matching jobs</h3><p style="font-size:12px">Try clearing the search or selecting "All".</p></div>`;
+      return;
+    }
     wrap.innerHTML = `<div class="jobs-empty">
       <div style="font-size:36px">⚒</div>
       <h3>No jobs yet${state.selectedCoSlug ? ' for this company' : ''}</h3>
@@ -774,9 +1036,11 @@ function renderJobsList() {
       </div>
       <div class="job-prompt">${escape(j.prompt)}</div>
       <div class="job-meta">
-        ${j.model.replace('claude-', '').replace('-20251001', '')} ·
+        ${(MODEL_RATES[j.model] && MODEL_RATES[j.model].label) || j.model.replace('claude-', '').replace('-20251001', '')} ·
         ${j.status === 'running' ? '⚡ running' : j.status === 'awaiting_approval' ? '⏸ awaiting approval' : j.status} ·
-        ~${j.laborMinutes}min labor saved
+        ~${j.laborMinutes}min saved
+        ${j.usage && (j.usage.input || j.usage.output) ? ' · ' + (j.usage.input + j.usage.output) + ' tok · $' + jobCostUsd(j).toFixed(4) : ''}
+        ${j.parentJobId ? ' · 🔗 chained' : ''}
         ${preview && j.status !== 'running' ? `<div style="margin-top:6px;color:var(--text-3);font-size:11px">${escape(preview)}${j.output.length > 120 ? '…' : ''}</div>` : ''}
       </div>
     </div>`;
@@ -789,17 +1053,55 @@ function renderJobsList() {
   });
 }
 
+// v0.2: render workflow templates row scoped to selected company
+function renderTemplates() {
+  const row = $('#templatesRow');
+  if (!row) return;
+  const list = state.selectedCoSlug && WORKFLOW_TEMPLATES[state.selectedCoSlug]
+    ? WORKFLOW_TEMPLATES[state.selectedCoSlug]
+    : GENERIC_TEMPLATES;
+  row.innerHTML = list.map(t => {
+    const band = classifyBand(t.prompt);
+    return `<button class="template-chip" data-tpl="${escape(t.prompt)}">
+      ${t.icon} ${escape(t.label)} <span class="chip-band band-${band}">${band}</span>
+    </button>`;
+  }).join('');
+  row.querySelectorAll('.template-chip').forEach(el => {
+    el.addEventListener('click', () => {
+      const inp = $('#taskInput');
+      inp.value = el.dataset.tpl;
+      inp.style.height = 'auto';
+      inp.style.height = Math.min(inp.scrollHeight + 8, 200) + 'px';
+      inp.focus();
+    });
+  });
+}
+
 function renderDetail() {
   const panel = $('#detailPanel');
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const todayJobs = state.jobs.filter(j => new Date(j.created) >= today);
   const totalMin = state.jobs.filter(j => j.status === 'done').reduce((s, j) => s + (j.laborMinutes || 15), 0);
   const hkd = Math.round(totalMin / 60 * HOURLY_HKD);
+  // v0.2: total spend
+  const totalUsd = state.jobs.reduce((s, x) => s + jobCostUsd(x), 0);
+  const totalHkdSpend = totalUsd * USD_HKD;
+  const ratio = totalHkdSpend > 0 ? (hkd / totalHkdSpend).toFixed(0) : '∞';
   const j = state.selectedJobId ? state.jobs.find(x => x.id === state.selectedJobId) : null;
 
   let html = `<div class="savings-card">
     <div class="savings-num">HKD ${hkd.toLocaleString()}</div>
     <div class="savings-sub">labor displaced · ${Math.round(totalMin)} minutes · ${state.jobs.filter(x => x.status === 'done').length} jobs done</div>
+  </div>
+  <div class="cost-card">
+    <div>
+      <div class="label">API spend</div>
+      <div class="num">$${totalUsd.toFixed(4)} <span style="font-size:11px;color:var(--text-3)">USD</span></div>
+    </div>
+    <div style="text-align:right">
+      <div class="label">ROI</div>
+      <div class="ratio">${ratio}× </div>
+    </div>
   </div>
   <div class="stat-grid">
     <div class="stat-card"><div class="stat-num">${todayJobs.length}</div><div class="stat-label">Jobs today</div></div>
@@ -810,9 +1112,16 @@ function renderDetail() {
 
   if (j) {
     const co = j.company ? state.companies.find(c => c.slug === j.company) : null;
+    const tok = j.usage || { input: 0, output: 0 };
+    const usd = jobCostUsd(j);
     html += `<div class="detail-section">
       <h4>Job · <span class="example-band band-${j.band}">Band ${j.band}</span> ${co ? '· ' + co.icon + ' ' + escape(co.name) : ''}</h4>
       <div class="detail-prompt">${escape(j.prompt)}</div>
+      <div class="cost-stat">
+        ${(MODEL_RATES[j.model] && MODEL_RATES[j.model].label) || j.model} ·
+        ${tok.input} in / ${tok.output} out tokens · $${usd.toFixed(5)} USD
+        ${j.parentJobId ? ' · 🔗 chained from <code>' + j.parentJobId.slice(0, 12) + '…</code>' : ''}
+      </div>
       <h4>Output</h4>
       <div class="detail-output" id="liveOutput">${escape(j.output) || '<span style="color:#475569">(streaming...)</span>'}</div>
       ${j.status === 'awaiting_approval' ? `
@@ -821,10 +1130,13 @@ function renderDetail() {
           <button class="btn-reject" onclick="rejectJob('${j.id}')">✕ Reject</button>
         </div>
       ` : ''}
+      ${(j.status === 'done') ? `
+        <button class="chain-btn" onclick="chainJob('${j.id}')">🔗 Chain to next step →</button>
+      ` : ''}
       <h4>Audit log</h4>
       ${j.auditLog.map(a => `<div class="audit-event">
         <div class="audit-time">${new Date(a.ts).toLocaleTimeString()}</div>
-        <div class="audit-type">${a.event}${a.by ? ' · ' + a.by : ''}${a.error ? ' · ' + escape(a.error) : ''}</div>
+        <div class="audit-type">${a.event}${a.by ? ' · ' + a.by : ''}${a.parent ? ' · ' + a.parent.slice(0, 12) : ''}${a.error ? ' · ' + escape(a.error) : ''}</div>
       </div>`).join('')}
     </div>`;
   } else {
@@ -839,6 +1151,7 @@ function renderDetail() {
 function renderAll() {
   renderHeader();
   renderRail();
+  renderTemplates();
   renderJobsList();
   renderDetail();
 }
@@ -863,6 +1176,7 @@ function toast(msg) {
 
 window.approveJob = approveJob;
 window.rejectJob = rejectJob;
+window.chainJob = chainJob;
 
 function wire() {
   // Onboarding
@@ -909,6 +1223,7 @@ function wire() {
     a.download = 'companyforge-' + state.tenant + '.json';
     a.click();
   });
+  $('#exportCsvBtn').addEventListener('click', () => { exportCsv(); toast('CSV downloaded'); });
   $('#clearBtn').addEventListener('click', () => {
     if (!confirm('Clear ALL data — companies, jobs, and API key — for this tenant? This cannot be undone.')) return;
     Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
@@ -940,9 +1255,11 @@ function wire() {
     const v = inp.value.trim();
     if (!v) return;
     if (!state.apiKey) { showOnboard(); return; }
-    createJob(v, $('#modelSelect').value, state.selectedCoSlug);
+    const parentId = inp.dataset.parentId || null;
+    createJob(v, $('#modelSelect').value, state.selectedCoSlug, parentId);
     inp.value = '';
     inp.style.height = 'auto';
+    delete inp.dataset.parentId;
   };
   $('#sendBtn').addEventListener('click', send);
   inp.addEventListener('keydown', (e) => {
@@ -951,6 +1268,42 @@ function wire() {
   inp.addEventListener('input', () => {
     inp.style.height = 'auto';
     inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
+  });
+
+  // v0.2: Filter pills
+  document.querySelectorAll('.filter-pill').forEach(p => {
+    p.addEventListener('click', () => {
+      state.jobFilter = p.dataset.filter;
+      renderJobsList();
+    });
+  });
+
+  // v0.2: Search
+  $('#searchInput').addEventListener('input', (e) => {
+    state.searchTerm = e.target.value.trim();
+    renderJobsList();
+  });
+
+  // v0.2: Mobile rail/detail toggles
+  const rail = document.querySelector('aside.rail');
+  const detail = document.querySelector('aside.detail');
+  const backdrop = $('#mobileBackdrop');
+  $('#railToggle').addEventListener('click', () => {
+    rail.classList.toggle('open');
+    backdrop.classList.toggle('show', rail.classList.contains('open'));
+  });
+  backdrop.addEventListener('click', () => {
+    rail.classList.remove('open');
+    detail.classList.remove('open');
+    backdrop.classList.remove('show');
+  });
+  // On mobile, tapping a job opens the detail panel
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest && e.target.closest('.job-card');
+    if (card && window.innerWidth <= 900) {
+      detail.classList.add('open');
+      backdrop.classList.add('show');
+    }
   });
 }
 
