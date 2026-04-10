@@ -23,6 +23,27 @@ A single static HTML page that lets a stranger try the full CompanyForge experie
 - **Streaming output** — live token-by-token via Anthropic SSE
 - **Tenant isolation by browser** — each browser is its own tenant, no cross-contamination
 
+## Portfolio in production (live proof)
+
+CompanyForge is not vapor — it's the system the founder uses to run a live multi-venture portfolio. Every site below is **autonomously maintained by AI content officers** running on this exact pattern (per-company memory + role file + content queue + launchd schedule + audit log):
+
+| Venture | URL | Vertical | Daily AI run |
+|---|---|---|---|
+| **SeniorDeli (软餐)** | [softmeal.org](https://softmeal.org) | Dysphagia / care food encyclopedia | 10:00 HKT |
+| **DSE 升學知識庫** | [dsedaquan.cn](https://dsedaquan.cn) | 大陸學生赴港升學 | 09:30 HKT |
+| **药油大全** | [yaoyoudaquan.cn](https://yaoyoudaquan.cn) | Global medicated oil encyclopedia | 11:00 HKT |
+| **CompanyForge** | [companyforge.ai](https://companyforge.ai) | The AI operator platform itself | continuous |
+
+Each hub publishes long-form, primary-source-cited articles every day with no human editing. The same approval-band model in this MVP is what gates publishing decisions in production:
+- **Band A** — research, drafting, internal notes (autonomous)
+- **Band B** — pushing markdown to GitHub Pages (autonomous + audit)
+- **Band C** — adding new ventures, changing schedule (human approval)
+- **Band D** — DNS / billing / contracts (hard-blocked at client)
+
+This is CompanyForge dogfooding itself: 1 founder, 0 employees, 4+ live web properties, daily AI-authored content under editorial firewall + commercial conversion layer. Full content is CC BY 4.0 — auditable by anyone.
+
+---
+
 ## Architecture
 
 ```
