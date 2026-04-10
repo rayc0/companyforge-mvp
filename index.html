@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CompanyForge — Run a portfolio of companies with AI agents</title>
+<meta name="description" content="The compliance-grade autonomous operations platform. Run 8 companies with 0 employees. BYO Anthropic API key, no signup, your data stays in your browser.">
+<style>
+  :root {
+    --bg: #0f0f1e;
+    --bg-2: #1a1a2e;
+    --bg-3: #232340;
+    --bg-4: #2d2d4d;
+    --border: #2d2d4d;
+    --text-1: #f1f5f9;
+    --text-2: #94a3b8;
+    --text-3: #64748b;
+    --accent: #6366f1;
+    --accent-2: #8b5cf6;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --shadow-lg: 0 20px 50px rgba(0,0,0,.4);
+    --r: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; color: inherit; }
+  a { color: var(--accent); text-decoration: none; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* Layout */
+  #app { display: grid; grid-template-rows: 56px 1fr; height: 100vh; }
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; background: var(--bg-2); border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+  .brand-logo {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .brand-text { letter-spacing: -.01em; }
+  .brand-tag { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 6px; }
+  .top-right { display: flex; align-items: center; gap: 14px; }
+  .savings-badge {
+    background: linear-gradient(135deg, rgba(34,197,94,.15), rgba(34,197,94,.05));
+    border: 1px solid rgba(34,197,94,.3);
+    color: var(--green);
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  }
+  .icon-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--text-2);
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .icon-btn:hover { color: var(--text-1); border-color: var(--accent); background: rgba(99,102,241,.1); }
+
+  /* Main grid */
+  main {
+    display: grid; grid-template-columns: 220px 1fr 380px;
+    height: calc(100vh - 56px); overflow: hidden;
+  }
+  aside.rail { background: var(--bg-2); border-right: 1px solid var(--border); overflow-y: auto; padding: 14px 8px; }
+  .rail-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); padding: 6px 12px; }
+  .company-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; margin: 2px 0; border-radius: 8px;
+    cursor: pointer; transition: all .12s;
+    border: 1px solid transparent;
+  }
+  .company-item:hover { background: var(--bg-3); }
+  .company-item.active { background: rgba(99,102,241,.15); border-color: var(--accent); }
+  .company-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .company-name { flex: 1; font-size: 13px; }
+  .company-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--green); opacity: 0; transition: opacity .2s; }
+  .company-item.has-running .company-pulse { opacity: 1; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .add-co-btn {
+    margin: 10px 8px 4px; width: calc(100% - 16px); padding: 8px;
+    background: transparent; border: 1px dashed var(--border); color: var(--text-3);
+    border-radius: 8px; font-size: 12px;
+  }
+  .add-co-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Center column */
+  section.center { display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
+  .task-input-wrap {
+    padding: 18px 20px; border-bottom: 1px solid var(--border); background: var(--bg-2);
+  }
+  .task-input-row { display: flex; gap: 10px; align-items: stretch; }
+  .task-input {
+    flex: 1; background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; color: var(--text-1); font-size: 14px; resize: none;
+    min-height: 42px; max-height: 200px;
+  }
+  .task-input:focus { outline: none; border-color: var(--accent); }
+  .task-controls { display: flex; gap: 8px; }
+  .model-select {
+    background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 0 10px; color: var(--text-1); font-size: 12px; min-width: 110px;
+  }
+  .send-btn {
+    background: var(--accent); border: none; color: white; padding: 0 18px;
+    border-radius: 8px; font-weight: 500; font-size: 13px;
+    transition: all .15s;
+  }
+  .send-btn:hover { background: var(--accent-2); }
+  .send-btn:disabled { opacity: .4; cursor: not-allowed; }
+  .task-hint { color: var(--text-3); font-size: 11px; margin-top: 8px; }
+  .task-hint kbd { background: var(--bg-3); padding: 1px 6px; border-radius: 4px; font-size: 10px; border: 1px solid var(--border); }
+
+  .jobs-list { flex: 1; overflow-y: auto; padding: 14px 20px 20px; }
+  .jobs-empty {
+    text-align: center; color: var(--text-3); padding: 60px 20px;
+  }
+  .jobs-empty h3 { color: var(--text-2); margin: 12px 0 6px; font-weight: 500; }
+  .jobs-empty .examples { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .example-card {
+    background: var(--bg-2); border: 1px solid var(--border); padding: 10px 14px;
+    border-radius: 8px; text-align: left; cursor: pointer; transition: all .15s;
+    color: var(--text-2); font-size: 12px;
+  }
+  .example-card:hover { border-color: var(--accent); color: var(--text-1); }
+  .example-band { font-size: 10px; padding: 1px 6px; border-radius: 10px; margin-left: 6px; font-weight: 600; }
+  .band-A { background: rgba(34,197,94,.2); color: var(--green); }
+  .band-B { background: rgba(99,102,241,.2); color: var(--accent); }
+  .band-C { background: rgba(245,158,11,.2); color: var(--amber); }
+  .band-D { background: rgba(239,68,68,.2); color: var(--red); }
+
+  .job-card {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: all .15s;
+  }
+  .job-card:hover { border-color: var(--accent); }
+  .job-card.selected { border-color: var(--accent); background: rgba(99,102,241,.06); }
+  .job-card.running { border-color: var(--accent); }
+  .job-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .job-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .status-running { background: var(--accent); animation: pulse 1.5s infinite; }
+  .status-done { background: var(--green); }
+  .status-failed { background: var(--red); }
+  .status-stopped { background: var(--text-3); }
+  .status-awaiting_approval { background: var(--amber); animation: pulse 1.5s infinite; }
+  .status-rejected { background: var(--red); }
+  .job-co-tag { font-size: 10px; padding: 1px 8px; border-radius: 10px; background: var(--bg-3); color: var(--text-2); }
+  .job-time { font-size: 11px; color: var(--text-3); margin-left: auto; }
+  .job-prompt { color: var(--text-1); font-size: 13px; line-height: 1.4; margin-bottom: 4px; word-break: break-word; }
+  .job-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--text-3); }
+
+  /* Right detail panel */
+  aside.detail { background: var(--bg-2); border-left: 1px solid var(--border); overflow-y: auto; padding: 18px 20px; }
+  .detail-empty { color: var(--text-3); text-align: center; padding: 30px 0; font-size: 12px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .stat-card {
+    background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 600; color: var(--text-1); }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); margin-top: 4px; }
+  .savings-card {
+    background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.03));
+    border: 1px solid rgba(34,197,94,.3);
+    border-radius: 10px; padding: 16px; margin-bottom: 18px;
+  }
+  .savings-num { font-size: 26px; font-weight: 600; color: var(--green); }
+  .savings-sub { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+  .detail-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin: 16px 0 8px; font-weight: 500; }
+  .detail-prompt { background: var(--bg-3); padding: 10px 12px; border-radius: 8px; font-size: 12px; color: var(--text-1); white-space: pre-wrap; word-break: break-word; }
+  .detail-output {
+    background: #000; padding: 12px 14px; border-radius: 8px;
+    font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 11px;
+    color: #c7d2fe; white-space: pre-wrap; word-break: break-word;
+    max-height: 320px; overflow-y: auto; border: 1px solid var(--border);
+  }
+  .audit-event { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--bg-3); font-size: 11px; }
+  .audit-event:last-child { border-bottom: none; }
+  .audit-time { color: var(--text-3); font-family: ui-monospace, monospace; }
+  .audit-type { color: var(--text-2); }
+
+  .approval-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .btn-approve, .btn-reject {
+    flex: 1; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    border: 1px solid; transition: all .15s;
+  }
+  .btn-approve { background: rgba(34,197,94,.15); border-color: var(--green); color: var(--green); }
+  .btn-approve:hover { background: var(--green); color: white; }
+  .btn-reject { background: rgba(239,68,68,.15); border-color: var(--red); color: var(--red); }
+  .btn-reject:hover { background: var(--red); color: white; }
+
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(8px);
+    z-index: 100; display: none; align-items: center; justify-content: center;
+  }
+  .modal-bg.show { display: flex; }
+  .modal {
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px;
+    max-width: 520px; width: calc(100% - 40px); padding: 28px;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal h2 { margin: 0 0 6px; font-size: 20px; }
+  .modal p { color: var(--text-2); font-size: 13px; margin: 0 0 18px; }
+  .modal label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 6px; }
+  .modal input[type=text], .modal input[type=password], .modal textarea {
+    width: 100%; background: var(--bg-3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; color: var(--text-1); font-size: 13px; margin-bottom: 14px;
+  }
+  .modal textarea { min-height: 80px; resize: vertical; font-family: inherit; }
+  .modal input:focus, .modal textarea:focus { outline: none; border-color: var(--accent); }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px; }
+  .btn-primary {
+    background: var(--accent); border: none; color: white; padding: 10px 18px;
+    border-radius: 8px; font-weight: 500; font-size: 13px;
+  }
+  .btn-primary:hover { background: var(--accent-2); }
+  .btn-primary:disabled { opacity: .5; }
+  .btn-secondary {
+    background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2);
+    padding: 10px 18px; border-radius: 8px; font-size: 13px;
+  }
+  .btn-secondary:hover { color: var(--text-1); }
+  .modal-info {
+    background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.3);
+    border-radius: 8px; padding: 10px 12px; font-size: 11px; color: var(--text-2);
+    margin-bottom: 14px; line-height: 1.5;
+  }
+  .modal-error {
+    background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
+    border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); margin-bottom: 12px;
+  }
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--bg-2); border: 1px solid var(--accent); color: var(--text-1);
+    padding: 12px 18px; border-radius: 10px; box-shadow: var(--shadow-lg);
+    font-size: 13px; z-index: 200; display: none; animation: slideIn .2s;
+  }
+  @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .delete-co-btn {
+    background: transparent; border: none; color: var(--text-3); font-size: 14px;
+    padding: 0; opacity: 0; transition: opacity .15s;
+  }
+  .company-item:hover .delete-co-btn { opacity: 1; }
+  .delete-co-btn:hover { color: var(--red); }
+
+  .footer-pitch {
+    padding: 12px 16px; border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-3); text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <div class="brand-logo">⚒</div>
+      <div>
+        <span class="brand-text">CompanyForge</span>
+        <span class="brand-tag">— autonomous operations</span>
+      </div>
+    </div>
+    <div class="top-right">
+      <div class="savings-badge" id="savingsBadge">HKD 0 saved</div>
+      <button class="icon-btn" id="settingsBtn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <div class="rail-section-title">Portfolio</div>
+      <div id="companyList"></div>
+      <button class="add-co-btn" id="addCoBtn">+ Add company</button>
+      <div class="footer-pitch" style="margin-top: 20px; border-top: none;">
+        Run 8 companies with 0 employees.<br>This is the system.
+      </div>
+    </aside>
+
+    <section class="center">
+      <div class="task-input-wrap">
+        <div class="task-input-row">
+          <textarea class="task-input" id="taskInput" placeholder="Type a task — e.g. 'summarize this week's customer emails' or 'draft reply to vendor ABC' ..." rows="1"></textarea>
+          <div class="task-controls">
+            <select class="model-select" id="modelSelect">
+              <option value="claude-haiku-4-5-20251001">Haiku 4.5 (fast)</option>
+              <option value="claude-sonnet-4-6">Sonnet 4.6 (balanced)</option>
+              <option value="claude-opus-4-6">Opus 4.6 (best)</option>
+            </select>
+            <button class="send-btn" id="sendBtn">Run agent →</button>
+          </div>
+        </div>
+        <div class="task-hint">
+          Selected: <span id="selectedCoLabel">All companies</span> · <kbd>⌘</kbd>+<kbd>Enter</kbd> to send · Band C tasks pause for your approval
+        </div>
+      </div>
+      <div class="jobs-list" id="jobsList"></div>
+    </section>
+
+    <aside class="detail" id="detailPanel"></aside>
+  </main>
+</div>
+
+<!-- Onboarding modal -->
+<div class="modal-bg" id="onboardModal">
+  <div class="modal">
+    <h2>Welcome to CompanyForge</h2>
+    <p>The control plane for running a portfolio of companies with AI agents — multi-tenant, audit-logged, with compliance-grade approval gates.</p>
+    <div class="modal-info">
+      🔒 <strong>Bring your own Anthropic API key.</strong> It is stored only in this browser's localStorage and is sent directly to Anthropic — never to a CompanyForge server. We don't have a server. Get a key at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>.
+    </div>
+    <div id="onboardError" style="display:none" class="modal-error"></div>
+    <label>Anthropic API key</label>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
+    <div class="modal-footer">
+      <button class="btn-primary" id="saveKeyBtn">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add company modal -->
+<div class="modal-bg" id="addCoModal">
+  <div class="modal">
+    <h2>Add a company</h2>
+    <p>Each company has its own memory file that gets injected as context into every task you run for it. This is how Raymond's AI runs 8 different ventures from one dashboard.</p>
+    <label>Short name (e.g. "Pinnacle")</label>
+    <input type="text" id="addCoName" placeholder="My Company">
+    <label>Icon (one emoji)</label>
+    <input type="text" id="addCoIcon" placeholder="🏢" maxlength="2">
+    <label>Memory / context — describe the company, the founders, the products, what matters, what to avoid</label>
+    <textarea id="addCoMemory" placeholder="My Company is a B2B SaaS based in HK selling X to Y. We have 3 products: ... Key contacts: ... Brand voice: professional, warm. Never make up financial figures."></textarea>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="addCoCancel">Cancel</button>
+      <button class="btn-primary" id="addCoSave">Add company</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-bg" id="settingsModal">
+  <div class="modal">
+    <h2>Settings</h2>
+    <p>Your data lives in this browser only. Tenant ID: <code id="tenantIdLabel" style="color:var(--accent)"></code></p>
+    <label>Anthropic API key</label>
+    <input type="password" id="settingsKeyInput" placeholder="sk-ant-api03-...">
+    <div class="modal-footer" style="justify-content: space-between">
+      <div style="display:flex; gap: 8px">
+        <button class="btn-secondary" id="exportBtn">Export data</button>
+        <button class="btn-secondary" id="clearBtn" style="color: var(--red); border-color: rgba(239,68,68,.4)">Clear all</button>
+      </div>
+      <div style="display:flex; gap: 8px">
+        <button class="btn-secondary" id="settingsClose">Close</button>
+        <button class="btn-primary" id="settingsSave">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// =============================================================================
+// CompanyForge MVP — single-file, browser-only, BYO API key
+// =============================================================================
+
+const STORAGE_KEYS = {
+  tenant: 'cf_tenant_id',
+  key: 'cf_api_key',
+  companies: 'cf_companies',
+  jobs: 'cf_jobs',
+  selectedCo: 'cf_selected_co'
+};
+
+const HOURLY_HKD = 250;  // assumed labor cost — used for savings counter
+
+const DEFAULT_COMPANIES = [
+  { slug: 'pinnacle', name: 'Pinnacle Robotics', icon: '🚁', color: '#6366f1',
+    memory: 'Pinnacle Robotics Systems Limited — HK-based UAV/robotics company. Founder: Raymond Chau. Building autonomous drones for inspection and defence applications. Brand voice: technical, precise, B2B. Never invent technical specifications.' },
+  { slug: 'seniordeli', name: 'SeniorDeli', icon: '🍽️', color: '#22c55e',
+    memory: 'SeniorDeli / Asaptic — HK food brand making dysphagia-safe meals and texture-modified food for elderly. Sells via direct B2C and to care homes. Brand voice: warm, caring, plain language. Compliance: HK food labelling, nutrition claims.' },
+  { slug: 'capypay', name: 'CapyPay', icon: '💳', color: '#f59e0b',
+    memory: 'CapyPay / PayFi — fintech / payments venture. Stablecoin rails for cross-border SME payments in GBA. Brand voice: trustworthy, sober, regulatory-aware. Never describe as "deposit-taking" or unlicensed banking activity.' },
+  { slug: 'companyforge', name: 'CompanyForge', icon: '⚒️', color: '#8b5cf6',
+    memory: 'CompanyForge — the autonomous operations platform you are using right now. Multi-tenant, BYO API key, single-founder portfolio operating system. Differentiator: Band A/B/C/D approval gates + per-company memory injection + compliance-grade audit log.' },
+  { slug: 'linpig', name: 'LinPig Trading', icon: '📈', color: '#14b8a6',
+    memory: 'LinPig — algorithmic trading bot. Long/short HK and US equities, including penny stocks. Routes via Interactive Brokers. Brand voice: terse, quantitative. Never give financial advice to non-employees.' },
+  { slug: 'pumphq', name: 'PumpHQ', icon: '🚀', color: '#ef4444',
+    memory: 'PumpHQ — early-stage venture. Use as placeholder. Replace this memory with your own company description.' },
+  { slug: 'botzan', name: 'Botzan', icon: '🤖', color: '#3b82f6',
+    memory: 'Botzan Robotics — service robotics venture. Replace with your own company description.' },
+  { slug: 'goldrushx', name: 'GoldRushX', icon: '⛏️', color: '#eab308',
+    memory: 'GoldRushX — exploration / commodities venture. Replace with your own company description.' }
+];
+
+const EXAMPLES = [
+  { prompt: 'Summarize the top 3 risks for a HK SME launching a new health-claim food product', co: 'seniordeli' },
+  { prompt: 'Draft a polite email to a Shenzhen contract manufacturer asking for a sample run quote', co: 'pinnacle' },
+  { prompt: 'List 10 questions a YC partner is likely to ask about defensibility for an AI agents company', co: 'companyforge' },
+  { prompt: 'Sign the master services agreement with vendor X', co: null }  // Band D demo
+];
+
+// ---------- State ----------
+let state = {
+  tenant: null,
+  apiKey: null,
+  companies: [],
+  jobs: [],
+  selectedCoSlug: null,  // null = all
+  selectedJobId: null,
+  inFlight: new Set()
+};
+
+// ---------- Persistence ----------
+function load() {
+  state.tenant = localStorage.getItem(STORAGE_KEYS.tenant);
+  if (!state.tenant) {
+    state.tenant = 't_' + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem(STORAGE_KEYS.tenant, state.tenant);
+  }
+  state.apiKey = localStorage.getItem(STORAGE_KEYS.key);
+  try { state.companies = JSON.parse(localStorage.getItem(STORAGE_KEYS.companies)) || DEFAULT_COMPANIES; }
+  catch (e) { state.companies = DEFAULT_COMPANIES; }
+  try { state.jobs = JSON.parse(localStorage.getItem(STORAGE_KEYS.jobs)) || []; }
+  catch (e) { state.jobs = []; }
+  state.selectedCoSlug = localStorage.getItem(STORAGE_KEYS.selectedCo) || null;
+  // Reset any zombie 'running' jobs from a previous browser session
+  state.jobs.forEach(j => { if (j.status === 'running') j.status = 'stopped'; });
+}
+function saveCompanies() { localStorage.setItem(STORAGE_KEYS.companies, JSON.stringify(state.companies)); }
+function saveJobs() {
+  // Persist a slim version (truncate output to keep localStorage small)
+  const slim = state.jobs.map(j => ({ ...j, output: (j.output || '').slice(0, 50000) }));
+  localStorage.setItem(STORAGE_KEYS.jobs, JSON.stringify(slim));
+}
+function saveKey() { localStorage.setItem(STORAGE_KEYS.key, state.apiKey || ''); }
+
+// ---------- Approval band classifier (mirrors server.js) ----------
+function classifyBand(prompt) {
+  const p = (prompt || '').toLowerCase();
+  const D = ['sign contract', 'sign the', 'make payment', 'transfer money', 'wire transfer', 'legal acceptance', 'board meeting'];
+  if (D.some(k => p.includes(k))) return 'D';
+  const C = ['send email', 'send the email', 'publish', 'post to', 'submit', 'reply to', 'send to', 'place order', 'send message'];
+  if (C.some(k => p.includes(k))) return 'C';
+  const B = ['update dashboard', 'organize file', 'schedule reminder', 'update calendar'];
+  if (B.some(k => p.includes(k))) return 'B';
+  return 'A';
+}
+
+// ---------- Labor estimate ----------
+function estimateLabor(prompt) {
+  const p = (prompt || '').toLowerCase();
+  if (p.includes('research') || p.includes('report') || p.includes('analysis') || p.includes('summarize')) return 60;
+  if (p.includes('draft') || p.includes('reply') || p.includes('email') || p.includes('message')) return 20;
+  if (p.includes('list') || p.includes('outline')) return 15;
+  if (p.includes('post') || p.includes('social')) return 10;
+  return 15;
+}
+
+// ---------- API key validation ----------
+async function validateKey(key) {
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 8,
+        messages: [{ role: 'user', content: 'Reply with the single word OK' }]
+      })
+    });
+    if (r.status === 401 || r.status === 403) return { ok: false, err: 'Authentication failed (' + r.status + '). Check the key.' };
+    if (!r.ok) {
+      const txt = await r.text().catch(() => '');
+      return { ok: false, err: 'HTTP ' + r.status + ': ' + txt.slice(0, 140) };
+    }
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, err: 'Network error: ' + e.message };
+  }
+}
+
+// ---------- Streaming Anthropic call ----------
+async function callClaudeStream({ prompt, model, onChunk, onDone, onError }) {
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': state.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: 1500,
+        stream: true,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!r.ok) {
+      const txt = await r.text().catch(() => '');
+      onError(new Error('HTTP ' + r.status + ' ' + txt.slice(0, 200)));
+      return;
+    }
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === '[DONE]') continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
+            onChunk(evt.delta.text);
+          } else if (evt.type === 'message_stop') {
+            onDone();
+            return;
+          } else if (evt.type === 'error') {
+            onError(new Error(evt.error?.message || 'stream error'));
+            return;
+          }
+        } catch (e) {}
+      }
+    }
+    onDone();
+  } catch (e) {
+    onError(e);
+  }
+}
+
+// ---------- Job pipeline ----------
+function createJob(prompt, model, companySlug) {
+  if (!prompt.trim()) return;
+  const id = 'j_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+  const band = classifyBand(prompt);
+  const labor = estimateLabor(prompt);
+  const company = companySlug ? state.companies.find(c => c.slug === companySlug) : null;
+  let context = '';
+  if (company) {
+    context = '<company_context name="' + company.name + '">\n' + company.memory + '\n</company_context>\n\n';
+  }
+  const fullPrompt = context + '<task>\n' + prompt + '\n</task>';
+
+  const job = {
+    id, prompt, model, company: companySlug || null,
+    band, status: 'running', output: '',
+    created: new Date().toISOString(),
+    completed: null,
+    laborMinutes: labor,
+    auditLog: [{ ts: new Date().toISOString(), event: 'created', by: 'human' }]
+  };
+  if (company) job.auditLog.push({ ts: new Date().toISOString(), event: 'context_injected', company: companySlug });
+
+  // Band D: hard-stop, never call API
+  if (band === 'D') {
+    job.status = 'rejected';
+    job.completed = job.created;
+    job.output = '⛔ Band D — Human-only action. AI cannot execute contracts, payments, or legal acceptance. This job was logged but not run.';
+    job.auditLog.push({ ts: job.created, event: 'blocked_band_d', by: 'system' });
+    state.jobs.unshift(job);
+    saveJobs();
+    state.selectedJobId = id;
+    renderAll();
+    return;
+  }
+
+  state.jobs.unshift(job);
+  state.selectedJobId = id;
+  state.inFlight.add(id);
+  saveJobs();
+  renderAll();
+
+  callClaudeStream({
+    prompt: fullPrompt,
+    model,
+    onChunk: (text) => {
+      job.output += text;
+      // Re-render only if this job is still selected (cheap update)
+      if (state.selectedJobId === id) renderDetail();
+      renderJobsList();  // update card preview
+    },
+    onDone: () => {
+      job.completed = new Date().toISOString();
+      if (band === 'C') {
+        job.status = 'awaiting_approval';
+        job.auditLog.push({ ts: job.completed, event: 'awaiting_approval' });
+        toast('Band C task ready for your approval →');
+      } else {
+        job.status = 'done';
+        job.auditLog.push({ ts: job.completed, event: 'done' });
+      }
+      state.inFlight.delete(id);
+      saveJobs();
+      renderAll();
+    },
+    onError: (err) => {
+      job.completed = new Date().toISOString();
+      job.status = 'failed';
+      job.output += '\n\n[error] ' + err.message;
+      job.auditLog.push({ ts: job.completed, event: 'failed', error: err.message });
+      state.inFlight.delete(id);
+      saveJobs();
+      renderAll();
+    }
+  });
+}
+
+function approveJob(id) {
+  const j = state.jobs.find(x => x.id === id);
+  if (!j) return;
+  j.status = 'done';
+  j.auditLog.push({ ts: new Date().toISOString(), event: 'approved', by: 'human' });
+  saveJobs();
+  renderAll();
+  toast('Approved ✓');
+}
+function rejectJob(id) {
+  const j = state.jobs.find(x => x.id === id);
+  if (!j) return;
+  j.status = 'rejected';
+  j.auditLog.push({ ts: new Date().toISOString(), event: 'rejected', by: 'human' });
+  saveJobs();
+  renderAll();
+  toast('Rejected');
+}
+
+// ---------- Render helpers ----------
+function $(s) { return document.querySelector(s); }
+function fmtTime(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = (now - d) / 1000;
+  if (diff < 60) return Math.floor(diff) + 's ago';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return d.toLocaleDateString();
+}
+function escape(s) { return (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+function renderHeader() {
+  const minutesSaved = state.jobs
+    .filter(j => j.status === 'done')
+    .reduce((s, j) => s + (j.laborMinutes || 15), 0);
+  const hkd = Math.round(minutesSaved / 60 * HOURLY_HKD);
+  $('#savingsBadge').textContent = 'HKD ' + hkd.toLocaleString() + ' saved';
+}
+
+function renderRail() {
+  const list = $('#companyList');
+  const allItem = `<div class="company-item ${state.selectedCoSlug === null ? 'active' : ''}" data-slug="">
+    <div class="company-icon" style="background:rgba(99,102,241,.2)">∞</div>
+    <div class="company-name">All companies</div>
+    <div class="company-pulse"></div>
+  </div>`;
+  const items = state.companies.map(c => {
+    const hasRunning = state.jobs.some(j => j.company === c.slug && j.status === 'running');
+    return `<div class="company-item ${state.selectedCoSlug === c.slug ? 'active' : ''} ${hasRunning ? 'has-running' : ''}" data-slug="${c.slug}">
+      <div class="company-icon" style="background:${c.color}33;color:${c.color}">${c.icon}</div>
+      <div class="company-name">${escape(c.name)}</div>
+      <button class="delete-co-btn" data-del="${c.slug}" title="Delete">×</button>
+      <div class="company-pulse"></div>
+    </div>`;
+  }).join('');
+  list.innerHTML = allItem + items;
+  list.querySelectorAll('.company-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-co-btn')) return;
+      const slug = el.dataset.slug || null;
+      state.selectedCoSlug = slug;
+      localStorage.setItem(STORAGE_KEYS.selectedCo, slug || '');
+      renderAll();
+    });
+  });
+  list.querySelectorAll('.delete-co-btn').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const slug = b.dataset.del;
+      if (!confirm('Delete company "' + slug + '"? This does not delete its past jobs.')) return;
+      state.companies = state.companies.filter(c => c.slug !== slug);
+      if (state.selectedCoSlug === slug) state.selectedCoSlug = null;
+      saveCompanies();
+      renderAll();
+    });
+  });
+  // Selected label in input hint
+  const co = state.selectedCoSlug ? state.companies.find(c => c.slug === state.selectedCoSlug) : null;
+  $('#selectedCoLabel').textContent = co ? co.name : 'All companies';
+}
+
+function renderJobsList() {
+  const wrap = $('#jobsList');
+  let visible = state.jobs;
+  if (state.selectedCoSlug) visible = visible.filter(j => j.company === state.selectedCoSlug);
+  if (visible.length === 0) {
+    wrap.innerHTML = `<div class="jobs-empty">
+      <div style="font-size:36px">⚒</div>
+      <h3>No jobs yet${state.selectedCoSlug ? ' for this company' : ''}</h3>
+      <p style="font-size:12px">Type a task above to run your first agent. Try one of these:</p>
+      <div class="examples">
+        ${EXAMPLES.map(e => {
+          const band = classifyBand(e.prompt);
+          return `<div class="example-card" data-ex="${escape(e.prompt)}" data-co="${e.co || ''}">
+            ${escape(e.prompt)} <span class="example-band band-${band}">Band ${band}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+    wrap.querySelectorAll('.example-card').forEach(el => {
+      el.addEventListener('click', () => {
+        $('#taskInput').value = el.dataset.ex;
+        if (el.dataset.co) {
+          state.selectedCoSlug = el.dataset.co;
+          localStorage.setItem(STORAGE_KEYS.selectedCo, el.dataset.co);
+          renderRail();
+        }
+        $('#taskInput').focus();
+      });
+    });
+    return;
+  }
+  wrap.innerHTML = visible.map(j => {
+    const co = j.company ? state.companies.find(c => c.slug === j.company) : null;
+    const preview = (j.output || '').slice(0, 120).replace(/\n+/g, ' ');
+    return `<div class="job-card ${j.status} ${state.selectedJobId === j.id ? 'selected' : ''}" data-id="${j.id}">
+      <div class="job-card-header">
+        <div class="job-status-dot status-${j.status}"></div>
+        <span class="example-band band-${j.band}">Band ${j.band}</span>
+        ${co ? `<span class="job-co-tag">${co.icon} ${escape(co.name)}</span>` : ''}
+        <span class="job-time">${fmtTime(j.created)}</span>
+      </div>
+      <div class="job-prompt">${escape(j.prompt)}</div>
+      <div class="job-meta">
+        ${j.model.replace('claude-', '').replace('-20251001', '')} ·
+        ${j.status === 'running' ? '⚡ running' : j.status === 'awaiting_approval' ? '⏸ awaiting approval' : j.status} ·
+        ~${j.laborMinutes}min labor saved
+        ${preview && j.status !== 'running' ? `<div style="margin-top:6px;color:var(--text-3);font-size:11px">${escape(preview)}${j.output.length > 120 ? '…' : ''}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.job-card').forEach(el => {
+    el.addEventListener('click', () => {
+      state.selectedJobId = el.dataset.id;
+      renderAll();
+    });
+  });
+}
+
+function renderDetail() {
+  const panel = $('#detailPanel');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const todayJobs = state.jobs.filter(j => new Date(j.created) >= today);
+  const totalMin = state.jobs.filter(j => j.status === 'done').reduce((s, j) => s + (j.laborMinutes || 15), 0);
+  const hkd = Math.round(totalMin / 60 * HOURLY_HKD);
+  const j = state.selectedJobId ? state.jobs.find(x => x.id === state.selectedJobId) : null;
+
+  let html = `<div class="savings-card">
+    <div class="savings-num">HKD ${hkd.toLocaleString()}</div>
+    <div class="savings-sub">labor displaced · ${Math.round(totalMin)} minutes · ${state.jobs.filter(x => x.status === 'done').length} jobs done</div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-num">${todayJobs.length}</div><div class="stat-label">Jobs today</div></div>
+    <div class="stat-card"><div class="stat-num">${state.jobs.filter(x => x.status === 'awaiting_approval').length}</div><div class="stat-label">Pending approval</div></div>
+    <div class="stat-card"><div class="stat-num">${state.companies.length}</div><div class="stat-label">Companies</div></div>
+    <div class="stat-card"><div class="stat-num">${state.jobs.filter(x => x.status === 'failed').length}</div><div class="stat-label">Failed</div></div>
+  </div>`;
+
+  if (j) {
+    const co = j.company ? state.companies.find(c => c.slug === j.company) : null;
+    html += `<div class="detail-section">
+      <h4>Job · <span class="example-band band-${j.band}">Band ${j.band}</span> ${co ? '· ' + co.icon + ' ' + escape(co.name) : ''}</h4>
+      <div class="detail-prompt">${escape(j.prompt)}</div>
+      <h4>Output</h4>
+      <div class="detail-output" id="liveOutput">${escape(j.output) || '<span style="color:#475569">(streaming...)</span>'}</div>
+      ${j.status === 'awaiting_approval' ? `
+        <div class="approval-actions">
+          <button class="btn-approve" onclick="approveJob('${j.id}')">✓ Approve & log</button>
+          <button class="btn-reject" onclick="rejectJob('${j.id}')">✕ Reject</button>
+        </div>
+      ` : ''}
+      <h4>Audit log</h4>
+      ${j.auditLog.map(a => `<div class="audit-event">
+        <div class="audit-time">${new Date(a.ts).toLocaleTimeString()}</div>
+        <div class="audit-type">${a.event}${a.by ? ' · ' + a.by : ''}${a.error ? ' · ' + escape(a.error) : ''}</div>
+      </div>`).join('')}
+    </div>`;
+  } else {
+    html += `<div class="detail-empty">Click a job on the left to see its full output and audit log.</div>`;
+  }
+  panel.innerHTML = html;
+  // Auto-scroll output if present
+  const out = $('#liveOutput');
+  if (out) out.scrollTop = out.scrollHeight;
+}
+
+function renderAll() {
+  renderHeader();
+  renderRail();
+  renderJobsList();
+  renderDetail();
+}
+
+// ---------- Event wiring ----------
+function showOnboard() { $('#onboardModal').classList.add('show'); setTimeout(() => $('#apiKeyInput').focus(), 100); }
+function hideOnboard() { $('#onboardModal').classList.remove('show'); }
+function showSettings() {
+  $('#settingsKeyInput').value = state.apiKey || '';
+  $('#tenantIdLabel').textContent = state.tenant;
+  $('#settingsModal').classList.add('show');
+}
+function hideSettings() { $('#settingsModal').classList.remove('show'); }
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.display = 'none'; }, 2500);
+}
+
+window.approveJob = approveJob;
+window.rejectJob = rejectJob;
+
+function wire() {
+  // Onboarding
+  $('#saveKeyBtn').addEventListener('click', async () => {
+    const key = $('#apiKeyInput').value.trim();
+    const errEl = $('#onboardError');
+    errEl.style.display = 'none';
+    if (!key.startsWith('sk-ant-')) {
+      errEl.textContent = 'Anthropic keys start with sk-ant-... Double-check the key.';
+      errEl.style.display = 'block';
+      return;
+    }
+    $('#saveKeyBtn').disabled = true;
+    $('#saveKeyBtn').textContent = 'Validating...';
+    const v = await validateKey(key);
+    $('#saveKeyBtn').disabled = false;
+    $('#saveKeyBtn').textContent = 'Continue →';
+    if (!v.ok) {
+      errEl.textContent = v.err;
+      errEl.style.display = 'block';
+      return;
+    }
+    state.apiKey = key;
+    saveKey();
+    hideOnboard();
+    toast('Welcome. Your key is saved in this browser only.');
+    renderAll();
+  });
+  $('#apiKeyInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#saveKeyBtn').click(); });
+
+  // Settings
+  $('#settingsBtn').addEventListener('click', showSettings);
+  $('#settingsClose').addEventListener('click', hideSettings);
+  $('#settingsSave').addEventListener('click', () => {
+    const k = $('#settingsKeyInput').value.trim();
+    if (k) { state.apiKey = k; saveKey(); toast('Saved'); }
+    hideSettings();
+  });
+  $('#exportBtn').addEventListener('click', () => {
+    const data = { tenant: state.tenant, exported: new Date().toISOString(), companies: state.companies, jobs: state.jobs };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'companyforge-' + state.tenant + '.json';
+    a.click();
+  });
+  $('#clearBtn').addEventListener('click', () => {
+    if (!confirm('Clear ALL data — companies, jobs, and API key — for this tenant? This cannot be undone.')) return;
+    Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
+    location.reload();
+  });
+
+  // Add company
+  $('#addCoBtn').addEventListener('click', () => $('#addCoModal').classList.add('show'));
+  $('#addCoCancel').addEventListener('click', () => $('#addCoModal').classList.remove('show'));
+  $('#addCoSave').addEventListener('click', () => {
+    const name = $('#addCoName').value.trim();
+    const icon = $('#addCoIcon').value.trim() || '🏢';
+    const memory = $('#addCoMemory').value.trim();
+    if (!name || !memory) { toast('Name and memory are required'); return; }
+    const slug = 'c_' + Math.random().toString(36).slice(2, 8);
+    state.companies.push({ slug, name, icon, color: '#6366f1', memory });
+    saveCompanies();
+    $('#addCoModal').classList.remove('show');
+    $('#addCoName').value = ''; $('#addCoIcon').value = ''; $('#addCoMemory').value = '';
+    state.selectedCoSlug = slug;
+    localStorage.setItem(STORAGE_KEYS.selectedCo, slug);
+    renderAll();
+    toast('Company added');
+  });
+
+  // Task input
+  const inp = $('#taskInput');
+  const send = () => {
+    const v = inp.value.trim();
+    if (!v) return;
+    if (!state.apiKey) { showOnboard(); return; }
+    createJob(v, $('#modelSelect').value, state.selectedCoSlug);
+    inp.value = '';
+    inp.style.height = 'auto';
+  };
+  $('#sendBtn').addEventListener('click', send);
+  inp.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); send(); }
+  });
+  inp.addEventListener('input', () => {
+    inp.style.height = 'auto';
+    inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
+  });
+}
+
+// ---------- Boot ----------
+load();
+wire();
+renderAll();
+if (!state.apiKey) showOnboard();
+</script>
+</body>
+</html>
