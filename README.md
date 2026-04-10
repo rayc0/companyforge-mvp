@@ -2,7 +2,7 @@
 
 > Run a portfolio of companies with AI agents — multi-tenant, audit-logged, with compliance-grade approval gates.
 
-**Live demo:** https://companyforge-mvp.pages.dev *(deploying)*
+**Live demo:** https://companyforge.ai (mirror: https://companyforge-mvp.pages.dev)
 
 CompanyForge is the autonomous operations platform built by a founder running 8 companies with 0 employees. It is the system, productized.
 
