@@ -261,6 +261,49 @@
     background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
     border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); margin-bottom: 12px;
   }
+
+  /* Live proof ticker — real commits from 4 production ventures */
+  .live-proof {
+    background: rgba(34,197,94,.05); border: 1px solid rgba(34,197,94,.25);
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;
+  }
+  .live-proof-header {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--green); font-weight: 600; margin-bottom: 10px;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+    box-shadow: 0 0 0 0 rgba(34,197,94,.7); animation: livePulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes livePulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+    70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+  .live-proof-list { display: flex; flex-direction: column; gap: 4px; }
+  .live-proof-row {
+    display: grid; grid-template-columns: 18px 120px 1fr auto; gap: 8px;
+    align-items: center; font-size: 11px; color: var(--text-2);
+    padding: 6px 8px; border-radius: 6px; text-decoration: none;
+    transition: background .12s;
+  }
+  .live-proof-row:hover { background: rgba(34,197,94,.08); color: var(--text-1); }
+  .live-proof-icon { font-size: 13px; }
+  .live-proof-label { color: var(--green); font-weight: 500; font-size: 10px; letter-spacing: .02em; }
+  .live-proof-msg {
+    color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+  }
+  .live-proof-row:hover .live-proof-msg { color: var(--text-1); }
+  .live-proof-when { color: var(--text-3); font-size: 10px; white-space: nowrap; }
+  .live-proof-loading, .live-proof-empty {
+    font-size: 11px; color: var(--text-3); text-align: center; padding: 8px;
+  }
+  @media (max-width: 520px) {
+    .live-proof-row { grid-template-columns: 18px 1fr auto; }
+    .live-proof-label { display: none; }
+  }
   .toast {
     position: fixed; bottom: 24px; right: 24px;
     background: var(--bg-2); border: 1px solid var(--accent); color: var(--text-1);
@@ -443,6 +486,15 @@
   <div class="modal">
     <h2>Welcome to CompanyForge</h2>
     <p>The control plane the founder uses to run <strong>4 live web ventures</strong> from one laptop with zero employees: <a href="https://softmeal.org" target="_blank" rel="noopener">softmeal.org</a>, <a href="https://dsedaquan.cn" target="_blank" rel="noopener">dsedaquan.cn</a>, <a href="https://yaoyoudaquan.cn" target="_blank" rel="noopener">yaoyoudaquan.cn</a>, and CompanyForge itself. Multi-tenant, audit-logged, with compliance-grade approval gates.</p>
+    <div class="live-proof">
+      <div class="live-proof-header">
+        <span class="live-dot"></span>
+        <span>Live · last autonomous commits on GitHub</span>
+      </div>
+      <div class="live-proof-list" id="liveProofList">
+        <div class="live-proof-loading">Fetching latest runs…</div>
+      </div>
+    </div>
     <div class="modal-info">
       🔒 <strong>Bring your own Anthropic API key.</strong> It is stored only in this browser's localStorage and is sent directly to Anthropic — never to a CompanyForge server. We don't have a server. Get a key at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>.
     </div>
@@ -1156,8 +1208,69 @@ function renderAll() {
   renderDetail();
 }
 
+// ---------- Live proof ticker (pulls latest commits from 4 production repos) ----------
+const LIVE_REPOS = [
+  { repo: 'dysphagia-knowledge-hub', label: 'softmeal.org', icon: '🍽️' },
+  { repo: 'dse-knowledge-hub', label: 'dsedaquan.cn', icon: '🎓' },
+  { repo: 'medicated-oil-knowledge-hub', label: 'yaoyoudaquan.cn', icon: '💊' },
+  { repo: 'companyforge-mvp', label: 'companyforge.ai', icon: '⚒' },
+];
+let liveProofLoaded = false;
+async function loadLiveProof() {
+  if (liveProofLoaded) return;
+  const listEl = $('#liveProofList');
+  if (!listEl) return;
+  try {
+    const results = await Promise.all(LIVE_REPOS.map(async (r) => {
+      try {
+        const res = await fetch(`https://api.github.com/repos/rayc0/${r.repo}/commits?per_page=1`);
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (!Array.isArray(json) || !json[0]) return null;
+        return { ...r, commit: json[0] };
+      } catch { return null; }
+    }));
+    const valid = results.filter(Boolean);
+    if (!valid.length) {
+      listEl.innerHTML = '<div class="live-proof-empty">GitHub temporarily unavailable — visit <a href="https://github.com/rayc0" target="_blank" rel="noopener">github.com/rayc0</a> to verify.</div>';
+      return;
+    }
+    valid.sort((a, b) => new Date(b.commit.commit.author.date) - new Date(a.commit.commit.author.date));
+    listEl.innerHTML = valid.map(r => {
+      const msg = escapeLiveText(r.commit.commit.message.split('\n')[0]).slice(0, 80);
+      const when = liveTimeAgo(new Date(r.commit.commit.author.date));
+      const url = r.commit.html_url;
+      return `<a class="live-proof-row" href="${url}" target="_blank" rel="noopener">
+        <span class="live-proof-icon">${r.icon}</span>
+        <span class="live-proof-label">${r.label}</span>
+        <span class="live-proof-msg">${msg}</span>
+        <span class="live-proof-when">${when}</span>
+      </a>`;
+    }).join('');
+    liveProofLoaded = true;
+  } catch {
+    listEl.innerHTML = '<div class="live-proof-empty">Could not reach GitHub.</div>';
+  }
+}
+function liveTimeAgo(d) {
+  const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  return Math.floor(s / 86400) + 'd ago';
+}
+function escapeLiveText(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
 // ---------- Event wiring ----------
-function showOnboard() { $('#onboardModal').classList.add('show'); setTimeout(() => $('#apiKeyInput').focus(), 100); }
+function showOnboard() {
+  $('#onboardModal').classList.add('show');
+  setTimeout(() => $('#apiKeyInput').focus(), 100);
+  loadLiveProof();
+}
 function hideOnboard() { $('#onboardModal').classList.remove('show'); }
 function showSettings() {
   $('#settingsKeyInput').value = state.apiKey || '';
