@@ -11,7 +11,7 @@ CompanyForge is the autonomous operations platform built by a founder running 8 
 A single static HTML page that lets a stranger try the full CompanyForge experience in under 60 seconds, with **zero signup, zero backend, and zero data leaving their browser**.
 
 - **Bring your own Anthropic API key** — stored only in `localStorage`, sent only to `api.anthropic.com`
-- **8 preset companies** (Pinnacle, SeniorDeli, CapyPay, CompanyForge, LinPig, PumpHQ, Botzan, GoldRushX) — or add your own
+- **8 preset example companies** (Robotics Co, Food Brand, Fintech Co, CompanyForge, Trading Co, Edu Platform, Health Media, New Venture) — or add your own
 - **Per-company memory injection** — every task you run for a company is automatically prefixed with that company's context
 - **Band A / B / C / D approval gates**:
   - **A** — runs autonomously (research, summarize, draft internal notes)
@@ -29,9 +29,9 @@ CompanyForge is not vapor — it's the system the founder uses to run a live mul
 
 | Venture | URL | Vertical | Daily AI run |
 |---|---|---|---|
-| **SeniorDeli (软餐)** | [softmeal.org](https://softmeal.org) | Dysphagia / care food encyclopedia | 10:00 HKT |
-| **DSE 升學知識庫** | [dsedaquan.cn](https://dsedaquan.cn) | 大陸學生赴港升學 | 09:30 HKT |
-| **药油大全** | [yaoyoudaquan.cn](https://yaoyoudaquan.cn) | Global medicated oil encyclopedia | 11:00 HKT |
+| **Care Food Encyclopedia** | [softmeal.org](https://softmeal.org) | Dysphagia / care food knowledge hub | 10:00 HKT |
+| **University Admissions Hub** | [dsedaquan.cn](https://dsedaquan.cn) | Student admissions knowledge hub | 09:30 HKT |
+| **Medicated Oil Encyclopedia** | [yaoyoudaquan.cn](https://yaoyoudaquan.cn) | Global medicated oil knowledge hub | 11:00 HKT |
 | **CompanyForge** | [companyforge.ai](https://companyforge.ai) | The AI operator platform itself | continuous |
 
 Each hub publishes long-form, primary-source-cited articles every day with no human editing. The same approval-band model in this MVP is what gates publishing decisions in production:

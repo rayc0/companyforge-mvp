@@ -540,7 +540,7 @@
   <div class="modal">
     <h2>Add a company</h2>
     <p>Each company gets its own AI operator with persistent memory. Every task you run for it is automatically prefixed with that company's full context — no re-explaining, no cross-contamination.</p>
-    <label>Short name (e.g. "Pinnacle")</label>
+    <label>Short name (e.g. "My Startup")</label>
     <input type="text" id="addCoName" placeholder="My Company">
     <label>Icon (one emoji)</label>
     <input type="text" id="addCoIcon" placeholder="🏢" maxlength="2">
@@ -606,27 +606,27 @@ function jobCostUsd(j) {
 }
 
 const DEFAULT_COMPANIES = [
-  { slug: 'pinnacle', name: 'Pinnacle Robotics', icon: '🚁', color: '#6366f1',
-    memory: 'Pinnacle Robotics Systems Limited — HK-based UAV/robotics company building autonomous drones for inspection and defence applications. Brand voice: technical, precise, B2B. Never invent technical specifications.' },
-  { slug: 'seniordeli', name: 'SeniorDeli', icon: '🍽️', color: '#22c55e',
-    memory: 'SeniorDeli / Asaptic — HK food brand making dysphagia-safe meals and texture-modified food for elderly. Sells via direct B2C and to care homes. Live AI-authored knowledge hub at softmeal.org. Founder is 起草人 of T/SATA 084 + 085 standards + HBS case W33928. Brand voice: warm, caring, plain language. Compliance: HK food labelling, nutrition claims, IDDSI framework.' },
-  { slug: 'capypay', name: 'CapyPay', icon: '💳', color: '#f59e0b',
-    memory: 'CapyPay / PayFi — fintech / payments venture. Stablecoin rails for cross-border SME payments in GBA. Brand voice: trustworthy, sober, regulatory-aware. Never describe as "deposit-taking" or unlicensed banking activity.' },
+  { slug: 'robotics-co', name: 'Robotics Co', icon: '🚁', color: '#6366f1',
+    memory: 'Robotics Co — UAV/robotics company building autonomous drones for inspection and industrial applications. Brand voice: technical, precise, B2B. Never invent technical specifications. Replace this memory with your own company context.' },
+  { slug: 'food-brand', name: 'Food Brand', icon: '🍽️', color: '#22c55e',
+    memory: 'Food Brand — specialty food company selling health-focused products direct-to-consumer and to institutions. Brand voice: warm, caring, plain language. Compliance: local food labelling and nutrition claims regulations. Replace this memory with your own company context.' },
+  { slug: 'fintech-co', name: 'Fintech Co', icon: '💳', color: '#f59e0b',
+    memory: 'Fintech Co — payments and financial technology venture. Brand voice: trustworthy, sober, regulatory-aware. Never describe as "deposit-taking" or unlicensed banking activity. Replace this memory with your own company context.' },
   { slug: 'companyforge', name: 'CompanyForge', icon: '⚒️', color: '#8b5cf6',
     memory: 'CompanyForge — the autonomous operations platform you are using right now. Multi-tenant, BYO API key, single-founder portfolio operating system. Differentiator: Band A/B/C/D approval gates + per-company memory injection + compliance-grade audit log.' },
-  { slug: 'linpig', name: 'LinPig Trading', icon: '📈', color: '#14b8a6',
-    memory: 'LinPig — algorithmic trading bot. Long/short HK and US equities, including penny stocks. Routes via Interactive Brokers. Brand voice: terse, quantitative. Never give financial advice to non-employees.' },
-  { slug: 'dsedaquan', name: 'DSE 升学知识库', icon: '🎓', color: '#ef4444',
-    memory: 'DSE 升学知识库 (dsedaquan.cn) — independent encyclopedia for 大陆学生 applying to 香港八大 universities. Live at dsedaquan.cn, autonomously written by CompanyForge AI content officer (daily 09:30 HKT). Editorial firewall: brand-neutral body, commercial CTA only in footer card (1-on-1 升学咨询 lead-gen). Cite primary sources: university admission pages, EDB, JUPAS, HKEAA, 香港入境处. License CC BY 4.0.' },
-  { slug: 'yaoyoudaquan', name: '药油大全', icon: '🧴', color: '#3b82f6',
-    memory: '药油大全 (yaoyoudaquan.cn) — global medicated oil encyclopedia (活络油 / 风油 / 万金油 / 跌打油). Live at yaoyoudaquan.cn, autonomously written by CompanyForge AI content officer (daily 11:00 HKT). Editorial firewall: brand-neutral body. Cite primary sources: 中国药典, USP-NF, NMPA, FDA, peer-reviewed papers. Mandatory safety warnings (婴幼儿/孕妇/G6PD) on every ingredient article. License CC BY 4.0. Operator: 柏丝科技深圳 (holds 康乐龄 trademark).' },
-  { slug: 'goldrushx', name: 'GoldRushX', icon: '⛏️', color: '#eab308',
-    memory: 'GoldRushX — exploration / commodities venture. Replace with your own company description.' }
+  { slug: 'trading-co', name: 'Trading Co', icon: '📈', color: '#14b8a6',
+    memory: 'Trading Co — algorithmic trading operation. Long/short equities across major exchanges. Brand voice: terse, quantitative. Never give financial advice to non-employees. Replace this memory with your own company context.' },
+  { slug: 'edu-platform', name: 'Edu Platform', icon: '🎓', color: '#ef4444',
+    memory: 'Edu Platform — education content and advisory platform. Publishes long-form, primary-source-cited articles autonomously via CompanyForge AI content officer. Editorial firewall: brand-neutral body, commercial CTA in footer only. License CC BY 4.0. Replace this memory with your own company context.' },
+  { slug: 'health-media', name: 'Health Media', icon: '🧴', color: '#3b82f6',
+    memory: 'Health Media — health and wellness content platform. Publishes research-backed articles autonomously via CompanyForge AI content officer. Mandatory safety warnings on all product-related content. Primary sources only: official pharmacopoeia, peer-reviewed papers, regulatory bodies. License CC BY 4.0. Replace this memory with your own company context.' },
+  { slug: 'new-venture', name: 'New Venture', icon: '🌱', color: '#eab308',
+    memory: 'New Venture — replace this with your company description. Include: what you do, who your customers are, your brand voice, what to never say, key contacts, and any compliance constraints.' }
 ];
 
 const EXAMPLES = [
-  { prompt: 'Summarize the top 3 risks for a HK SME launching a new health-claim food product', co: 'seniordeli' },
-  { prompt: 'Draft a polite email to a Shenzhen contract manufacturer asking for a sample run quote', co: 'pinnacle' },
+  { prompt: 'Summarize the top 3 risks for an SME launching a new health-claim food product', co: 'food-brand' },
+  { prompt: 'Draft a polite email to a contract manufacturer asking for a sample run quote', co: 'robotics-co' },
   { prompt: 'List 10 questions a YC partner is likely to ask about defensibility for an AI agents company', co: 'companyforge' },
   { prompt: 'Sign the master services agreement with vendor X', co: null }  // Band D demo
 ];
