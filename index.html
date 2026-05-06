@@ -3,1456 +3,592 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CompanyForge — AI Autonomous Operations for Solo Founders</title>
-<meta name="description" content="Run a portfolio of companies with zero employees. CompanyForge gives every venture its own AI operator — persistent memory, compliance-grade approval gates, and a full audit log. Browser-only, BYO key.">
-<meta name="theme-color" content="#0f0f1e">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='72' text-anchor='middle' font-size='62' font-family='system-ui'%3E%E2%9A%92%3C/text%3E%3C/svg%3E">
-<!-- Open Graph -->
+<title>CompanyForge by PQSafe — AI Ops Skills for Portfolio Founders</title>
+<meta name="description" content="AI ops skills for the founder running 2+ companies at once. Per-company memory, 4-band approval gates, post-quantum signed payments. Powered by PQSafe.">
+<meta property="og:title" content="CompanyForge by PQSafe — AI Ops Skills for Portfolio Founders">
+<meta property="og:description" content="AI ops skills for the founder running 2+ companies at once. Per-company memory. 4-band approval gates. Post-quantum signed payments via pqsafe.xyz.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="CompanyForge — AI Autonomous Operations for Solo Founders">
-<meta property="og:description" content="Run a portfolio of companies with zero employees. Every venture gets its own AI operator — persistent memory, Band A–D approval gates, full audit log. Browser-only, BYO key.">
-<meta property="og:url" content="https://companyforge.ai/">
-<meta property="og:image" content="https://companyforge.ai/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="CompanyForge">
-<!-- Twitter -->
+<meta property="og:url" content="https://companyforge.ai">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CompanyForge — AI Autonomous Operations for Solo Founders">
-<meta name="twitter:description" content="Run a portfolio of companies with zero employees. Every venture gets its own AI operator with persistent memory and compliance-grade approval gates. Browser-only, BYO key.
-<meta name="twitter:image" content="https://companyforge.ai/og-image.png">
+<meta name="twitter:title" content="CompanyForge by PQSafe — AI Ops Skills for Portfolio Founders">
+<meta name="twitter:description" content="Per-company memory. 4-band approval gates. Post-quantum signed payments. Powered by PQSafe.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='72' text-anchor='middle' font-size='62' font-family='system-ui'%3E%E2%9A%92%3C/text%3E%3C/svg%3E">
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0f0f1e;
-    --bg-2: #1a1a2e;
-    --bg-3: #232340;
-    --bg-4: #2d2d4d;
-    --border: #2d2d4d;
-    --text-1: #f1f5f9;
-    --text-2: #94a3b8;
-    --text-3: #64748b;
-    --accent: #6366f1;
-    --accent-2: #8b5cf6;
-    --green: #22c55e;
-    --amber: #f59e0b;
-    --red: #ef4444;
-    --shadow-lg: 0 20px 50px rgba(0,0,0,.4);
-    --r: 10px;
+    --bg: #0d0d12; --bg-2: #13131c; --bg-3: #1a1a27;
+    --border: rgba(255,255,255,.08);
+    --accent: #6366f1; --accent-2: #8b5cf6;
+    --text-1: #f0f0f8; --text-2: #9898b8;
+    --green: #22c55e; --r: 12px;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text-1);
-    font-size: 14px;
-    line-height: 1.5;
-    overflow: hidden;
+    background: var(--bg); color: var(--text-1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
-  button { font-family: inherit; cursor: pointer; }
-  input, textarea, select { font-family: inherit; color: inherit; }
-  a { color: var(--accent); text-decoration: none; }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-  /* Layout */
-  #app { display: grid; grid-template-rows: 56px 1fr; height: 100vh; }
-  header.top {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; background: var(--bg-2); border-bottom: 1px solid var(--border);
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,13,18,.88); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
-  .brand-logo {
-    width: 30px; height: 30px; border-radius: 8px;
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-1); flex-shrink: 0; }
+  .nav-logo {
+    width: 32px; height: 32px; border-radius: 8px;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
-  .brand-text { letter-spacing: -.01em; }
-  .brand-tag { color: var(--text-3); font-weight: 400; font-size: 12px; margin-left: 6px; }
-  .top-right { display: flex; align-items: center; gap: 14px; }
-  .savings-badge {
-    background: linear-gradient(135deg, rgba(34,197,94,.15), rgba(34,197,94,.05));
-    border: 1px solid rgba(34,197,94,.3);
-    color: var(--green);
-    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  .nav-name { font-weight: 700; font-size: 16px; }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-pqsafe {
+    font-size: 11px; font-weight: 700; color: var(--text-2);
+    border: 1px solid var(--border); border-radius: 6px; padding: 4px 9px;
+    text-decoration: none; letter-spacing: .3px; transition: color .15s, border-color .15s;
+    white-space: nowrap;
   }
-  .icon-btn {
-    background: transparent; border: 1px solid var(--border); color: var(--text-2);
-    width: 34px; height: 34px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all .15s;
-  }
-  .icon-btn:hover { color: var(--text-1); border-color: var(--accent); background: rgba(99,102,241,.1); }
+  .nav-pqsafe:hover { color: var(--accent); border-color: rgba(99,102,241,.4); }
+  .nav-pqsafe span { color: var(--accent); }
 
-  /* Main grid */
-  main {
-    display: grid; grid-template-columns: 220px 1fr 380px;
-    height: calc(100vh - 56px); overflow: hidden;
+  /* LANG SWITCHER */
+  .lang-sw { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .lang-btn {
+    background: transparent; border: none; color: var(--text-2);
+    font-size: 12px; font-weight: 600; padding: 5px 10px; cursor: pointer;
+    transition: background .15s, color .15s; white-space: nowrap;
   }
-  aside.rail { background: var(--bg-2); border-right: 1px solid var(--border); overflow-y: auto; padding: 14px 8px; }
-  .rail-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); padding: 6px 12px; }
-  .company-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px; margin: 2px 0; border-radius: 8px;
-    cursor: pointer; transition: all .12s;
-    border: 1px solid transparent;
-  }
-  .company-item:hover { background: var(--bg-3); }
-  .company-item.active { background: rgba(99,102,241,.15); border-color: var(--accent); }
-  .company-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-  .company-name { flex: 1; font-size: 13px; }
-  .company-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--green); opacity: 0; transition: opacity .2s; }
-  .company-item.has-running .company-pulse { opacity: 1; animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
-  .add-co-btn {
-    margin: 10px 8px 4px; width: calc(100% - 16px); padding: 8px;
-    background: transparent; border: 1px dashed var(--border); color: var(--text-3);
-    border-radius: 8px; font-size: 12px;
-  }
-  .add-co-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+  .lang-btn.active { background: rgba(99,102,241,.15); color: var(--accent); }
+  .lang-btn:hover:not(.active) { background: rgba(255,255,255,.05); color: var(--text-1); }
 
-  /* Center column */
-  section.center { display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-  .task-input-wrap {
-    padding: 18px 20px; border-bottom: 1px solid var(--border); background: var(--bg-2);
+  .nav-cta {
+    background: var(--accent); color: #fff; border: none;
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none; transition: opacity .15s; white-space: nowrap;
   }
-  .task-input-row { display: flex; gap: 10px; align-items: stretch; }
-  .task-input {
-    flex: 1; background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
-    padding: 10px 14px; color: var(--text-1); font-size: 14px; resize: none;
-    min-height: 42px; max-height: 200px;
-  }
-  .task-input:focus { outline: none; border-color: var(--accent); }
-  .task-controls { display: flex; gap: 8px; }
-  .model-select {
-    background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
-    padding: 0 10px; color: var(--text-1); font-size: 12px; min-width: 110px;
-  }
-  .send-btn {
-    background: var(--accent); border: none; color: white; padding: 0 18px;
-    border-radius: 8px; font-weight: 500; font-size: 13px;
-    transition: all .15s;
-  }
-  .send-btn:hover { background: var(--accent-2); }
-  .send-btn:disabled { opacity: .4; cursor: not-allowed; }
-  .task-hint { color: var(--text-3); font-size: 11px; margin-top: 8px; }
-  .task-hint kbd { background: var(--bg-3); padding: 1px 6px; border-radius: 4px; font-size: 10px; border: 1px solid var(--border); }
+  .nav-cta:hover { opacity: .85; }
 
-  .jobs-list { flex: 1; overflow-y: auto; padding: 14px 20px 20px; }
-  .jobs-empty {
-    text-align: center; color: var(--text-3); padding: 60px 20px;
+  /* HERO */
+  .hero { text-align: center; padding: 100px 24px 80px; max-width: 1100px; margin: 0 auto; }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.25);
+    border-radius: 100px; padding: 5px 14px; font-size: 13px; color: var(--green); margin-bottom: 28px;
   }
-  .jobs-empty h3 { color: var(--text-2); margin: 12px 0 6px; font-weight: 500; }
-  .jobs-empty .examples { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; max-width: 500px; margin-left: auto; margin-right: auto; }
-  .example-card {
-    background: var(--bg-2); border: 1px solid var(--border); padding: 10px 14px;
-    border-radius: 8px; text-align: left; cursor: pointer; transition: all .15s;
-    color: var(--text-2); font-size: 12px;
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .hero h1 {
+    font-size: clamp(34px, 6vw, 66px); font-weight: 800; letter-spacing: -2px; line-height: 1.08;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, var(--text-1) 40%, var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .example-card:hover { border-color: var(--accent); color: var(--text-1); }
-  .example-band { font-size: 10px; padding: 1px 6px; border-radius: 10px; margin-left: 6px; font-weight: 600; }
-  .band-A { background: rgba(34,197,94,.2); color: var(--green); }
-  .band-B { background: rgba(99,102,241,.2); color: var(--accent); }
-  .band-C { background: rgba(245,158,11,.2); color: var(--amber); }
-  .band-D { background: rgba(239,68,68,.2); color: var(--red); }
-
-  .job-card {
-    background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: all .15s;
-  }
-  .job-card:hover { border-color: var(--accent); }
-  .job-card.selected { border-color: var(--accent); background: rgba(99,102,241,.06); }
-  .job-card.running { border-color: var(--accent); }
-  .job-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .job-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .status-running { background: var(--accent); animation: pulse 1.5s infinite; }
-  .status-done { background: var(--green); }
-  .status-failed { background: var(--red); }
-  .status-stopped { background: var(--text-3); }
-  .status-awaiting_approval { background: var(--amber); animation: pulse 1.5s infinite; }
-  .status-rejected { background: var(--red); }
-  .job-co-tag { font-size: 10px; padding: 1px 8px; border-radius: 10px; background: var(--bg-3); color: var(--text-2); }
-  .job-time { font-size: 11px; color: var(--text-3); margin-left: auto; }
-  .job-prompt { color: var(--text-1); font-size: 13px; line-height: 1.4; margin-bottom: 4px; word-break: break-word; }
-  .job-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--text-3); }
-
-  /* Right detail panel */
-  aside.detail { background: var(--bg-2); border-left: 1px solid var(--border); overflow-y: auto; padding: 18px 20px; }
-  .detail-empty { color: var(--text-3); text-align: center; padding: 30px 0; font-size: 12px; }
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-  .stat-card {
-    background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px; text-align: center;
-  }
-  .stat-num { font-size: 22px; font-weight: 600; color: var(--text-1); }
-  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); margin-top: 4px; }
-  .savings-card {
-    background: linear-gradient(135deg, rgba(34,197,94,.12), rgba(34,197,94,.03));
-    border: 1px solid rgba(34,197,94,.3);
-    border-radius: 10px; padding: 16px; margin-bottom: 18px;
-  }
-  .savings-num { font-size: 26px; font-weight: 600; color: var(--green); }
-  .savings-sub { font-size: 11px; color: var(--text-3); margin-top: 4px; }
-
-  .detail-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); margin: 16px 0 8px; font-weight: 500; }
-  .detail-prompt { background: var(--bg-3); padding: 10px 12px; border-radius: 8px; font-size: 12px; color: var(--text-1); white-space: pre-wrap; word-break: break-word; }
-  .detail-output {
-    background: #000; padding: 12px 14px; border-radius: 8px;
-    font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 11px;
-    color: #c7d2fe; white-space: pre-wrap; word-break: break-word;
-    max-height: 320px; overflow-y: auto; border: 1px solid var(--border);
-  }
-  .audit-event { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--bg-3); font-size: 11px; }
-  .audit-event:last-child { border-bottom: none; }
-  .audit-time { color: var(--text-3); font-family: ui-monospace, monospace; }
-  .audit-type { color: var(--text-2); }
-
-  .approval-actions { display: flex; gap: 8px; margin-top: 12px; }
-  .btn-approve, .btn-reject {
-    flex: 1; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: 500;
-    border: 1px solid; transition: all .15s;
-  }
-  .btn-approve { background: rgba(34,197,94,.15); border-color: var(--green); color: var(--green); }
-  .btn-approve:hover { background: var(--green); color: white; }
-  .btn-reject { background: rgba(239,68,68,.15); border-color: var(--red); color: var(--red); }
-  .btn-reject:hover { background: var(--red); color: white; }
-
-  /* Modal */
-  .modal-bg {
-    position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(8px);
-    z-index: 100; display: none; align-items: center; justify-content: center;
-  }
-  .modal-bg.show { display: flex; }
-  .modal {
-    background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px;
-    max-width: 520px; width: calc(100% - 40px); padding: 28px;
-    box-shadow: var(--shadow-lg);
-  }
-  .modal h2 { margin: 0 0 6px; font-size: 20px; }
-  .modal p { color: var(--text-2); font-size: 13px; margin: 0 0 18px; }
-  .modal label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 6px; }
-  .modal input[type=text], .modal input[type=password], .modal textarea {
-    width: 100%; background: var(--bg-3); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 14px; color: var(--text-1); font-size: 13px; margin-bottom: 14px;
-  }
-  .modal textarea { min-height: 80px; resize: vertical; font-family: inherit; }
-  .modal input:focus, .modal textarea:focus { outline: none; border-color: var(--accent); }
-  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px; }
+  .hero p { font-size: clamp(15px, 2vw, 19px); color: var(--text-2); max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn-primary {
-    background: var(--accent); border: none; color: white; padding: 10px 18px;
-    border-radius: 8px; font-weight: 500; font-size: 13px;
+    background: var(--accent); color: #fff; border: none;
+    padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600;
+    cursor: pointer; text-decoration: none; transition: opacity .15s, transform .15s; display: inline-block;
   }
-  .btn-primary:hover { background: var(--accent-2); }
-  .btn-primary:disabled { opacity: .5; }
-  .btn-secondary {
-    background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2);
-    padding: 10px 18px; border-radius: 8px; font-size: 13px;
+  .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text-2); border: 1px solid var(--border);
+    padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 500;
+    cursor: pointer; text-decoration: none; transition: border-color .15s, color .15s; display: inline-block;
   }
-  .btn-secondary:hover { color: var(--text-1); }
-  .modal-info {
-    background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.3);
-    border-radius: 8px; padding: 10px 12px; font-size: 11px; color: var(--text-2);
-    margin-bottom: 14px; line-height: 1.5;
-  }
-  .modal-error {
-    background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
-    border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); margin-bottom: 12px;
-  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.2); color: var(--text-1); }
 
-  /* Live proof ticker — real commits from 4 production ventures */
-  .live-proof {
-    background: rgba(34,197,94,.05); border: 1px solid rgba(34,197,94,.25);
-    border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;
+  /* DEMO MOCKUP */
+  .demo-wrap {
+    margin-top: 60px; border-radius: 16px; border: 1px solid var(--border);
+    background: var(--bg-2); overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(99,102,241,.1);
   }
-  .live-proof-header {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--green); font-weight: 600; margin-bottom: 10px;
+  .demo-bar {
+    height: 40px; background: var(--bg-3); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 14px; gap: 7px;
   }
-  .live-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--green);
-    box-shadow: 0 0 0 0 rgba(34,197,94,.7); animation: livePulse 2s infinite;
-    flex-shrink: 0;
+  .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .demo-url {
+    margin-left: 8px; font-size: 12px; color: var(--text-2);
+    background: var(--bg-2); border-radius: 6px; padding: 3px 12px;
+    flex: 1; max-width: 280px; text-align: center;
   }
-  @keyframes livePulse {
-    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
-    70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
-    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-  }
-  .live-proof-list { display: flex; flex-direction: column; gap: 4px; }
-  .live-proof-row {
-    display: grid; grid-template-columns: 18px 120px 1fr auto; gap: 8px;
-    align-items: center; font-size: 11px; color: var(--text-2);
-    padding: 6px 8px; border-radius: 6px; text-decoration: none;
-    transition: background .12s;
-  }
-  .live-proof-row:hover { background: rgba(34,197,94,.08); color: var(--text-1); }
-  .live-proof-icon { font-size: 13px; }
-  .live-proof-label { color: var(--green); font-weight: 500; font-size: 10px; letter-spacing: .02em; }
-  .live-proof-msg {
-    color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
-  }
-  .live-proof-row:hover .live-proof-msg { color: var(--text-1); }
-  .live-proof-when { color: var(--text-3); font-size: 10px; white-space: nowrap; }
-  .live-proof-loading, .live-proof-empty {
-    font-size: 11px; color: var(--text-3); text-align: center; padding: 8px;
-  }
-  @media (max-width: 520px) {
-    .live-proof-row { grid-template-columns: 18px 1fr auto; }
-    .live-proof-label { display: none; }
-  }
-  .toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--bg-2); border: 1px solid var(--accent); color: var(--text-1);
-    padding: 12px 18px; border-radius: 10px; box-shadow: var(--shadow-lg);
-    font-size: 13px; z-index: 200; display: none; animation: slideIn .2s;
-  }
-  @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .demo-inner { display: grid; grid-template-columns: 180px 1fr 260px; height: 360px; }
+  @media (max-width: 768px) { .demo-inner { grid-template-columns: 1fr; } .demo-sidebar,.demo-detail{display:none} .demo-main{height:280px} }
+  .demo-sidebar { border-right: 1px solid var(--border); padding: 14px 10px; font-size: 12px; }
+  .demo-sidebar-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-2); padding: 0 6px; margin-bottom: 10px; }
+  .demo-company { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 8px; margin-bottom: 2px; }
+  .demo-company.active { background: rgba(99,102,241,.15); }
+  .demo-co-icon { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .demo-co-name { font-size: 12px; color: var(--text-1); font-weight: 500; }
+  .demo-co-status { font-size: 10px; color: var(--text-2); }
+  .demo-pulse { width: 5px; height: 5px; border-radius: 50%; background: var(--green); margin-left: auto; animation: pulse 2s infinite; }
+  .demo-main { display: flex; flex-direction: column; overflow: hidden; }
+  .demo-input-area { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .demo-textarea { width: 100%; background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--text-2); resize: none; height: 42px; font-family: inherit; }
+  .demo-jobs { flex: 1; overflow-y: auto; padding: 10px 14px; }
+  .demo-job { display: flex; gap: 10px; padding: 9px 10px; border-radius: 8px; margin-bottom: 4px; background: rgba(255,255,255,.03); border: 1px solid transparent; }
+  .demo-job.running { border-color: rgba(99,102,241,.2); background: rgba(99,102,241,.05); }
+  .demo-job-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+  .demo-job-text { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+  .demo-job-meta { font-size: 10px; color: rgba(255,255,255,.25); margin-top: 2px; }
+  .demo-detail { border-left: 1px solid var(--border); padding: 14px 16px; font-size: 11px; overflow-y: auto; }
+  .demo-detail-title { font-size: 11px; font-weight: 600; color: var(--text-1); margin-bottom: 10px; }
+  .demo-detail-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); color: var(--text-2); }
+  .demo-detail-val { color: var(--text-1); }
+  .demo-band { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .band-a { background: rgba(34,197,94,.15); color: var(--green); }
 
-  .delete-co-btn {
-    background: transparent; border: none; color: var(--text-3); font-size: 14px;
-    padding: 0; opacity: 0; transition: opacity .15s;
-  }
-  .company-item:hover .delete-co-btn { opacity: 1; }
-  .delete-co-btn:hover { color: var(--red); }
+  /* SECTIONS */
+  .section-wrap { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; }
+  .section-title { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 16px; }
+  .section-sub { font-size: 17px; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 56px; }
 
-  .footer-pitch {
-    padding: 12px 16px; border-top: 1px solid var(--border);
-    font-size: 11px; color: var(--text-3); text-align: center;
-  }
+  /* FEATURES */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .feature-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); padding: 26px 22px; transition: border-color .2s, transform .2s; }
+  .feature-card:hover { border-color: rgba(99,102,241,.3); transform: translateY(-2px); }
+  .feature-icon { font-size: 26px; margin-bottom: 12px; display: block; }
+  .feature-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+  .feature-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; }
 
-  /* v0.2: Workflow template chips */
-  .templates-row {
-    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
-  }
-  .template-chip {
-    background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2);
-    padding: 5px 10px; border-radius: 14px; font-size: 11px; cursor: pointer;
-    transition: all .12s; display: inline-flex; align-items: center; gap: 5px;
-  }
-  .template-chip:hover { border-color: var(--accent); color: var(--text-1); background: rgba(99,102,241,.1); }
-  .template-chip .chip-band { font-size: 9px; padding: 0 5px; border-radius: 8px; font-weight: 600; }
+  /* HOW IT WORKS */
+  .alt-bg { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .steps-wrap { background: var(--bg-2); border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .step { padding: 30px 26px; border-right: 1px solid var(--border); }
+  .step:last-child { border-right: none; }
+  @media (max-width: 768px) { .step { border-right: none; border-bottom: 1px solid var(--border); } .step:last-child { border-bottom: none; } }
+  .step-num { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .step-title { font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-  /* v0.2: Filter pills + search */
-  .jobs-toolbar {
-    display: flex; align-items: center; gap: 8px; padding: 12px 20px 6px;
-    border-bottom: 1px solid var(--border); background: var(--bg);
-  }
-  .filter-pill {
-    background: var(--bg-2); border: 1px solid var(--border); color: var(--text-2);
-    padding: 5px 12px; border-radius: 14px; font-size: 11px; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 5px;
-  }
-  .filter-pill:hover { color: var(--text-1); border-color: var(--accent); }
-  .filter-pill.active { background: rgba(99,102,241,.15); border-color: var(--accent); color: var(--text-1); }
-  .filter-pill .count {
-    background: var(--bg-3); color: var(--text-2); padding: 0 6px;
-    border-radius: 9px; font-size: 10px; font-weight: 600;
-  }
-  .filter-pill.active .count { background: var(--accent); color: white; }
-  .search-input {
-    flex: 1; max-width: 240px; margin-left: auto;
-    background: var(--bg-2); border: 1px solid var(--border); color: var(--text-1);
-    padding: 6px 12px; border-radius: 14px; font-size: 12px;
-  }
-  .search-input:focus { outline: none; border-color: var(--accent); }
+  /* BANDS */
+  .bands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 48px; }
+  .band-card { border-radius: 10px; padding: 20px; border: 1px solid var(--border); }
+  .band-label-txt { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .band-name { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+  .band-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .band-a-card { background: rgba(34,197,94,.06); border-color: rgba(34,197,94,.2); }
+  .band-a-card .band-label-txt { color: var(--green); }
+  .band-b-card { background: rgba(99,102,241,.06); border-color: rgba(99,102,241,.2); }
+  .band-b-card .band-label-txt { color: var(--accent); }
+  .band-c-card { background: rgba(234,179,8,.06); border-color: rgba(234,179,8,.2); }
+  .band-c-card .band-label-txt { color: #eab308; }
+  .band-d-card { background: rgba(239,68,68,.06); border-color: rgba(239,68,68,.2); }
+  .band-d-card .band-label-txt { color: #f87171; }
 
-  /* v0.2: Cost stat */
-  .cost-stat { font-size: 11px; color: var(--text-3); margin-top: 4px; }
-  .cost-card {
-    background: linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.05));
-    border: 1px solid rgba(99,102,241,.3);
-    border-radius: 10px; padding: 14px; margin-bottom: 14px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .cost-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); }
-  .cost-card .num { font-size: 18px; font-weight: 600; color: var(--text-1); }
-  .cost-card .ratio { color: var(--green); font-size: 13px; font-weight: 600; }
+  /* CTA */
+  .cta-inner { text-align: center; padding: 100px 24px; max-width: 680px; margin: 0 auto; }
+  .cta-inner h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 20px; }
+  .cta-inner p { font-size: 17px; color: var(--text-2); margin-bottom: 36px; line-height: 1.7; }
+  .cta-note { margin-top: 16px; font-size: 13px; color: var(--text-2); }
 
-  /* v0.2: Chain button */
-  .chain-btn {
-    background: var(--bg-3); border: 1px solid var(--accent); color: var(--accent);
-    padding: 7px 12px; border-radius: 8px; font-size: 11px; font-weight: 500;
-    margin-top: 10px; width: 100%; transition: all .15s;
-  }
-  .chain-btn:hover { background: var(--accent); color: white; }
+  footer { border-top: 1px solid var(--border); padding: 30px 24px; text-align: center; font-size: 13px; color: var(--text-2); }
+  footer a { color: var(--text-2); text-decoration: none; }
+  footer a:hover { color: var(--text-1); }
 
-  /* v0.2: Mobile rail toggle */
-  .rail-toggle {
-    display: none; background: transparent; border: none;
-    color: var(--text-2); font-size: 22px; padding: 0 8px;
-  }
-
-  /* v0.2: Mobile responsive */
-  @media (max-width: 900px) {
-    main { grid-template-columns: 1fr; }
-    aside.rail {
-      position: fixed; top: 56px; left: 0; bottom: 0; width: 240px; z-index: 50;
-      transform: translateX(-100%); transition: transform .2s;
-      box-shadow: var(--shadow-lg);
-    }
-    aside.rail.open { transform: translateX(0); }
-    aside.detail {
-      position: fixed; top: 56px; right: 0; bottom: 0; width: 100%; max-width: 420px;
-      z-index: 50; transform: translateX(100%); transition: transform .2s;
-      box-shadow: var(--shadow-lg);
-    }
-    aside.detail.open { transform: translateX(0); }
-    .rail-toggle { display: inline-flex; align-items: center; }
-    .brand-tag { display: none; }
-    .templates-row { max-height: 64px; overflow-x: auto; flex-wrap: nowrap; }
-    .task-controls { flex-direction: column; }
-    .model-select { min-width: 100%; padding: 6px 10px; }
-    .send-btn { padding: 8px; }
-    .jobs-toolbar { flex-wrap: wrap; padding: 10px 14px; }
-    .search-input { max-width: 100%; width: 100%; margin-left: 0; margin-top: 6px; }
-    .jobs-list { padding: 10px 14px 80px; }
-    .task-input-wrap { padding: 12px 14px; }
-  }
-
-  .mobile-backdrop {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
-    z-index: 40;
-  }
-  .mobile-backdrop.show { display: block; }
+  @media (max-width: 480px) { .nav-name { display: none; } }
 </style>
 </head>
 <body>
 
-<div id="app">
-  <header class="top">
-    <div class="brand">
-      <button class="rail-toggle" id="railToggle" aria-label="Menu">☰</button>
-      <div class="brand-logo">⚒</div>
-      <div>
-        <span class="brand-text">CompanyForge</span>
-        <span class="brand-tag">— AI autonomous operations · v0.3</span>
-      </div>
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">⚒</div>
+    <span class="nav-name">CompanyForge</span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-pqsafe" href="https://pqsafe.xyz" target="_blank" rel="noopener">by <span>PQSafe</span></a>
+    <div class="lang-sw">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh-TW">繁中</button>
+      <button class="lang-btn" data-lang="zh-CN">简中</button>
     </div>
-    <div class="top-right">
-      <div class="savings-badge" id="savingsBadge">HKD 0 saved</div>
-      <button class="icon-btn" id="settingsBtn" title="Settings">⚙</button>
+    <a class="nav-cta" href="/app" data-i18n="nav_cta">Try free →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    <span data-i18n="hero_badge">Developer Preview · Browser-only MVP · BYO API key</span>
+  </div>
+  <h1 data-i18n="hero_h1">Run a portfolio of companies with zero staff</h1>
+  <p data-i18n="hero_sub">CompanyForge by PQSafe — AI ops skills for the founder running 2+ companies at once. Per-company memory. 4-band approval gates. Post-quantum signed payments.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="/app" data-i18n="hero_btn1">Start free — BYO API key</a>
+    <a class="btn-ghost" href="#how" data-i18n="hero_btn2">See how it works</a>
+  </div>
+
+  <div class="demo-wrap">
+    <div class="demo-bar">
+      <div class="demo-dot" style="background:#ff5f57"></div>
+      <div class="demo-dot" style="background:#febc2e"></div>
+      <div class="demo-dot" style="background:#28c840"></div>
+      <div class="demo-url">companyforge.ai/app</div>
     </div>
-  </header>
-  <div class="mobile-backdrop" id="mobileBackdrop"></div>
-
-  <main>
-    <aside class="rail">
-      <div class="rail-section-title">Portfolio</div>
-      <div id="companyList"></div>
-      <button class="add-co-btn" id="addCoBtn">+ Add company</button>
-      <div class="footer-pitch" style="margin-top: 20px; border-top: none;">
-        Run multiple companies with 0 employees.<br>One AI operator per venture.<br>
-        <span style="display:block; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); color: var(--accent); font-size: 11px;">
-          Band A auto · Band D hard-blocked · full audit log
-        </span>
+    <div class="demo-inner">
+      <div class="demo-sidebar">
+        <div class="demo-sidebar-title" data-i18n="demo_portfolio">Portfolio</div>
+        <div class="demo-company active">
+          <div class="demo-co-icon" style="background:rgba(99,102,241,.2)">🏠</div>
+          <div><div class="demo-co-name">NestPay</div><div class="demo-co-status" data-i18n="demo_active">Active</div></div>
+          <div class="demo-pulse"></div>
+        </div>
+        <div class="demo-company">
+          <div class="demo-co-icon" style="background:rgba(139,92,246,.2)">🏥</div>
+          <div><div class="demo-co-name">VaultMed</div><div class="demo-co-status" data-i18n="demo_idle">Idle</div></div>
+        </div>
+        <div class="demo-company">
+          <div class="demo-co-icon" style="background:rgba(34,197,94,.15)">🛒</div>
+          <div><div class="demo-co-name">DriftCart</div><div class="demo-co-status" data-i18n="demo_running">Running</div></div>
+          <div class="demo-pulse"></div>
+        </div>
+        <div class="demo-company">
+          <div class="demo-co-icon" style="background:rgba(234,179,8,.15)">💬</div>
+          <div><div class="demo-co-name">PulseDesk</div><div class="demo-co-status" data-i18n="demo_active">Active</div></div>
+        </div>
       </div>
-    </aside>
-
-    <section class="center">
-      <div class="task-input-wrap">
-        <div class="task-input-row">
-          <textarea class="task-input" id="taskInput" placeholder="Type a task — e.g. 'summarize this week's customer emails' or 'draft reply to vendor ABC' ..." rows="1"></textarea>
-          <div class="task-controls">
-            <select class="model-select" id="modelSelect">
-              <option value="claude-haiku-4-5-20251001">Haiku 4.5 (fast)</option>
-              <option value="claude-sonnet-4-6">Sonnet 4.6 (balanced)</option>
-              <option value="claude-opus-4-6">Opus 4.6 (best)</option>
-            </select>
-            <button class="send-btn" id="sendBtn">Run agent →</button>
+      <div class="demo-main">
+        <div class="demo-input-area">
+          <textarea class="demo-textarea" readonly data-i18n-value="demo_task">Summarise this week's customer emails and draft replies for approval →</textarea>
+        </div>
+        <div class="demo-jobs">
+          <div class="demo-job running">
+            <div class="demo-job-dot" style="background:var(--accent);animation:pulse 1s infinite"></div>
+            <div>
+              <div class="demo-job-text" data-i18n="demo_job1">Summarise customer emails · NestPay</div>
+              <div class="demo-job-meta">Running · Band A · claude-sonnet-4-6 · 1,240 tok</div>
+            </div>
+          </div>
+          <div class="demo-job">
+            <div class="demo-job-dot" style="background:var(--green)"></div>
+            <div>
+              <div class="demo-job-text" data-i18n="demo_job2">Draft Q2 investor update · DriftCart</div>
+              <div class="demo-job-meta">Done · Band B · 3,100 tok · HKD 0.18</div>
+            </div>
+          </div>
+          <div class="demo-job">
+            <div class="demo-job-dot" style="background:#eab308"></div>
+            <div>
+              <div class="demo-job-text" data-i18n="demo_job3">Renew vendor contract · VaultMed · awaiting approval</div>
+              <div class="demo-job-meta">Paused · Band C · needs sign-off</div>
+            </div>
           </div>
         </div>
-        <div class="task-hint">
-          Selected: <span id="selectedCoLabel">All companies</span> · <kbd>⌘</kbd>+<kbd>Enter</kbd> to send · Band C tasks pause for your approval
-        </div>
-        <div class="templates-row" id="templatesRow"></div>
       </div>
-      <div class="jobs-toolbar">
-        <button class="filter-pill active" data-filter="all">All <span class="count" id="cnt-all">0</span></button>
-        <button class="filter-pill" data-filter="pending">⏸ Pending <span class="count" id="cnt-pending">0</span></button>
-        <button class="filter-pill" data-filter="running">⚡ Running <span class="count" id="cnt-running">0</span></button>
-        <button class="filter-pill" data-filter="failed">✕ Failed <span class="count" id="cnt-failed">0</span></button>
-        <input type="text" class="search-input" id="searchInput" placeholder="Search jobs...">
-      </div>
-      <div class="jobs-list" id="jobsList"></div>
-    </section>
-
-    <aside class="detail" id="detailPanel"></aside>
-  </main>
-</div>
-
-<!-- Onboarding modal -->
-<div class="modal-bg" id="onboardModal">
-  <div class="modal">
-    <h2>CompanyForge — <span style="color: var(--accent)">AI autonomous operations</span> for solo founders</h2>
-    <p>One control plane. Every venture gets its own AI operator with persistent memory and compliance-grade approval gates. Run a portfolio of companies with zero full-time employees.</p>
-
-    <div style="margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-      <div style="padding: 12px 14px; border: 1px solid rgba(99,102,241,.3); border-radius: var(--r); background: rgba(99,102,241,.07);">
-        <div style="font-size: 18px; margin-bottom: 6px;">🧠</div>
-        <strong style="color: var(--text-1); font-size: 13px;">Per-company memory</strong>
-        <p style="margin: 4px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5;">Every task auto-prefixed with that venture's full context. No re-explaining.</p>
-      </div>
-      <div style="padding: 12px 14px; border: 1px solid rgba(99,102,241,.3); border-radius: var(--r); background: rgba(99,102,241,.07);">
-        <div style="font-size: 18px; margin-bottom: 6px;">🔒</div>
-        <strong style="color: var(--text-1); font-size: 13px;">Band A–D approval gates</strong>
-        <p style="margin: 4px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5;">Band A runs autonomously. Band D is hard-blocked client-side — AI physically cannot execute high-risk actions.</p>
-      </div>
-      <div style="padding: 12px 14px; border: 1px solid rgba(99,102,241,.3); border-radius: var(--r); background: rgba(99,102,241,.07);">
-        <div style="font-size: 18px; margin-bottom: 6px;">📋</div>
-        <strong style="color: var(--text-1); font-size: 13px;">Full audit log</strong>
-        <p style="margin: 4px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5;">Every job logged with token cost, approval band, and outcome. CSV export for investors and regulators.</p>
-      </div>
-      <div style="padding: 12px 14px; border: 1px solid rgba(99,102,241,.3); border-radius: var(--r); background: rgba(99,102,241,.07);">
-        <div style="font-size: 18px; margin-bottom: 6px;">🌐</div>
-        <strong style="color: var(--text-1); font-size: 13px;">Browser-only, zero backend</strong>
-        <p style="margin: 4px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5;">Your data never touches our servers. BYO Anthropic key. Nothing to install.</p>
-      </div>
-    </div>
-
-    <div class="live-proof" style="margin-top: 16px;">
-      <div class="live-proof-header">
-        <span class="live-dot"></span>
-        <span>Live · 4 ventures running autonomously right now</span>
-      </div>
-      <div class="live-proof-list" id="liveProofList">
-        <div class="live-proof-loading">Fetching latest runs…</div>
-      </div>
-    </div>
-
-    <div class="modal-info" style="margin-top: 16px;">
-      🔒 <strong>Bring your own Anthropic API key.</strong> It is stored only in this browser's localStorage and is sent directly to Anthropic — never to a CompanyForge server. We don't have a server. Get a key at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>.
-    </div>
-    <div id="onboardError" style="display:none" class="modal-error"></div>
-    <label>Anthropic API key</label>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
-    <div class="modal-footer">
-      <button class="btn-primary" id="saveKeyBtn">Continue →</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add company modal -->
-<div class="modal-bg" id="addCoModal">
-  <div class="modal">
-    <h2>Add a company</h2>
-    <p>Each company gets its own AI operator with persistent memory. Every task you run for it is automatically prefixed with that company's full context — no re-explaining, no cross-contamination.</p>
-    <label>Short name (e.g. "My Startup")</label>
-    <input type="text" id="addCoName" placeholder="My Company">
-    <label>Icon (one emoji)</label>
-    <input type="text" id="addCoIcon" placeholder="🏢" maxlength="2">
-    <label>Memory / context — describe the company, the founders, the products, what matters, what to avoid</label>
-    <textarea id="addCoMemory" placeholder="My Company is a B2B SaaS based in HK selling X to Y. We have 3 products: ... Key contacts: ... Brand voice: professional, warm. Never make up financial figures."></textarea>
-    <div class="modal-footer">
-      <button class="btn-secondary" id="addCoCancel">Cancel</button>
-      <button class="btn-primary" id="addCoSave">Add company</button>
-    </div>
-  </div>
-</div>
-
-<!-- Settings modal -->
-<div class="modal-bg" id="settingsModal">
-  <div class="modal">
-    <h2>Settings</h2>
-    <p>Your data lives in this browser only. Tenant ID: <code id="tenantIdLabel" style="color:var(--accent)"></code></p>
-    <label>Anthropic API key</label>
-    <input type="password" id="settingsKeyInput" placeholder="sk-ant-api03-...">
-    <div class="modal-footer" style="justify-content: space-between">
-      <div style="display:flex; gap: 8px; flex-wrap: wrap">
-        <button class="btn-secondary" id="exportBtn">Export JSON</button>
-        <button class="btn-secondary" id="exportCsvBtn">Audit log CSV</button>
-        <button class="btn-secondary" id="clearBtn" style="color: var(--red); border-color: rgba(239,68,68,.4)">Clear all</button>
-      </div>
-      <div style="display:flex; gap: 8px">
-        <button class="btn-secondary" id="settingsClose">Close</button>
-        <button class="btn-primary" id="settingsSave">Save</button>
+      <div class="demo-detail">
+        <div class="demo-detail-title" data-i18n="demo_detail_title">Job detail</div>
+        <div class="demo-detail-row"><span data-i18n="demo_venture">Venture</span><span class="demo-detail-val">NestPay</span></div>
+        <div class="demo-detail-row"><span data-i18n="demo_band">Band</span><span><span class="demo-band band-a">A — Auto</span></span></div>
+        <div class="demo-detail-row"><span data-i18n="demo_cost">Cost</span><span class="demo-detail-val">HKD 0.07</span></div>
+        <div class="demo-detail-row"><span data-i18n="demo_tokens">Tokens</span><span class="demo-detail-val">1,240</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- FEATURES -->
+<div style="border-top:1px solid var(--border)">
+  <div class="section-wrap" id="features">
+    <div class="section-label" data-i18n="feat_label">Why CompanyForge</div>
+    <h2 class="section-title" data-i18n="feat_title">Everything a founder needs. Nothing an employee costs.</h2>
+    <p class="section-sub" data-i18n="feat_sub">Built for solo founders running multiple companies — or anyone who wants AI to do the operational work.</p>
+    <div class="features-grid">
+      <div class="feature-card"><span class="feature-icon">🧠</span><div class="feature-title" data-i18n="f1_title">Per-company memory</div><p class="feature-desc" data-i18n="f1_desc">Every task auto-prefixed with that venture's full context — team, tone, vendors, customers. No re-explaining each time.</p></div>
+      <div class="feature-card"><span class="feature-icon">🔒</span><div class="feature-title" data-i18n="f2_title">Band A–D approval gates</div><p class="feature-desc" data-i18n="f2_desc">Band A runs autonomously. Band D is hard-blocked client-side — AI physically cannot execute high-risk actions, even if instructed.</p></div>
+      <div class="feature-card"><span class="feature-icon">📋</span><div class="feature-title" data-i18n="f3_title">Full audit log</div><p class="feature-desc" data-i18n="f3_desc">Every job logged with token cost, approval band, model, and outcome. CSV export for investors, boards, and regulators.</p></div>
+      <div class="feature-card"><span class="feature-icon">🌐</span><div class="feature-title" data-i18n="f4_title">Browser-only, zero backend</div><p class="feature-desc" data-i18n="f4_desc">Your data never touches our servers. Bring your own Anthropic API key. Nothing to install, no subscription, no vendor lock-in.</p></div>
+      <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-title" data-i18n="f5_title">Multi-venture dispatch</div><p class="feature-desc" data-i18n="f5_desc">Run tasks across your entire portfolio in one place. Route by company, see all jobs in a unified feed, track cost by venture.</p></div>
+      <div class="feature-card"><span class="feature-icon">🛡️</span><div class="feature-title" data-i18n="f6_title">Compliance-first design</div><p class="feature-desc" data-i18n="f6_desc">Approval bands, hard blocks, and audit trails built for regulated industries. Suitable for fintech, healthcare, legal, and beyond.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="alt-bg">
+  <div class="section-wrap" id="how">
+    <div class="section-label" data-i18n="how_label">How it works</div>
+    <h2 class="section-title" data-i18n="how_title">Up and running in 3 minutes</h2>
+    <p class="section-sub" data-i18n="how_sub">No servers. No DevOps. Just paste your API key and start delegating.</p>
+    <div class="steps-wrap">
+      <div class="steps-grid">
+        <div class="step"><div class="step-num">Step 01</div><div class="step-title" data-i18n="s1_title">Add your companies</div><p class="step-desc" data-i18n="s1_desc">Create a profile for each venture — name, description, tone, vendor list, and any context the AI should always know.</p></div>
+        <div class="step"><div class="step-num">Step 02</div><div class="step-title" data-i18n="s2_title">Paste your API key</div><p class="step-desc" data-i18n="s2_desc">Enter your Anthropic API key. It stays in your browser. No account required. Choose Haiku, Sonnet, or Opus per task.</p></div>
+        <div class="step"><div class="step-num">Step 03</div><div class="step-title" data-i18n="s3_title">Type a task, hit send</div><p class="step-desc" data-i18n="s3_desc">The AI runs the task with full company context. Band A tasks complete automatically. Band C tasks pause for your approval.</p></div>
+        <div class="step"><div class="step-num">Step 04</div><div class="step-title" data-i18n="s4_title">Review and scale</div><p class="step-desc" data-i18n="s4_desc">Every job is logged with cost and outcome. Watch your savings badge grow as the AI handles what used to take hours.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BANDS -->
+<div>
+  <div class="section-wrap">
+    <div class="section-label" data-i18n="band_label">Approval system</div>
+    <h2 class="section-title" data-i18n="band_title">Four bands. Full control.</h2>
+    <p class="section-sub" data-i18n="band_sub">Set the risk tolerance for each venture. The AI respects it absolutely.</p>
+    <div class="bands-grid">
+      <div class="band-card band-a-card"><div class="band-label-txt">Band A</div><div class="band-name" data-i18n="ba_name">Fully autonomous</div><p class="band-desc" data-i18n="ba_desc">AI runs the task end-to-end with no human review. Ideal for research, drafting, and summarisation.</p></div>
+      <div class="band-card band-b-card"><div class="band-label-txt">Band B</div><div class="band-name" data-i18n="bb_name">Auto with log</div><p class="band-desc" data-i18n="bb_desc">Runs automatically but creates a detailed audit entry. You review after the fact.</p></div>
+      <div class="band-card band-c-card"><div class="band-label-txt">Band C</div><div class="band-name" data-i18n="bc_name">Pause for approval</div><p class="band-desc" data-i18n="bc_desc">AI drafts and pauses. You review, edit, then approve. Nothing external happens without your sign-off.</p></div>
+      <div class="band-card band-d-card"><div class="band-label-txt">Band D</div><div class="band-name" data-i18n="bd_name">Hard blocked</div><p class="band-desc" data-i18n="bd_desc">Client-side block. AI cannot execute contracts, payments, or high-risk actions — even if instructed.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PQSAFE PAYMENT LAYER -->
+<div style="border-top:1px solid var(--border)">
+  <div class="section-wrap" id="payment-layer">
+    <div class="section-label" data-i18n="pq_label">The Payment Layer</div>
+    <h2 class="section-title" data-i18n="pq_title">Every agent payment is a post-quantum signed mandate.</h2>
+    <p class="section-sub" data-i18n="pq_sub">When CompanyForge executes a payment, it calls PQSafe — the cryptographic trust primitive for the agent economy. Every disbursement is a SpendEnvelope: post-quantum signed, revocable mid-flight, logged with a hash that survives regulatory audit. Band D is hard-blocked client-side. The agent cannot wire money without your explicit confirmation.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:0">
+      <div class="feature-card" style="border-color:rgba(99,102,241,.25);background:rgba(99,102,241,.04)">
+        <span class="feature-icon">🔐</span>
+        <div class="feature-title" data-i18n="pq_f1_title">Post-quantum SpendEnvelope</div>
+        <p class="feature-desc" data-i18n="pq_f1_desc">Every payment mandate is ML-DSA-65 signed — quantum-resistant by default. Not a Stripe webhook. A cryptographic mandate built for the agent economy.</p>
+      </div>
+      <div class="feature-card" style="border-color:rgba(99,102,241,.25);background:rgba(99,102,241,.04)">
+        <span class="feature-icon">↩️</span>
+        <div class="feature-title" data-i18n="pq_f2_title">Revocable mid-flight</div>
+        <p class="feature-desc" data-i18n="pq_f2_desc">SpendEnvelopes can be cancelled before settlement. If an agent task goes wrong, you can pull the payment back — a capability no traditional payment API offers.</p>
+      </div>
+      <div class="feature-card" style="border-color:rgba(99,102,241,.25);background:rgba(99,102,241,.04)">
+        <span class="feature-icon">📜</span>
+        <div class="feature-title" data-i18n="pq_f3_title">Compliance-grade audit trail</div>
+        <p class="feature-desc" data-i18n="pq_f3_desc">Every SpendEnvelope generates a hash-anchored log entry. Admissible for regulatory audit. Built for 7-year retention from day one.</p>
+      </div>
+    </div>
+    <div style="margin-top:40px;padding:24px 28px;border-radius:12px;border:1px solid rgba(99,102,241,.3);background:rgba(99,102,241,.06);text-align:center">
+      <p style="font-size:15px;color:var(--text-2);line-height:1.7" data-i18n="pq_primitive">CompanyForge by PQSafe — <a href="https://pqsafe.xyz" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600">pqsafe.xyz</a> is the primitive. This is the application.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="alt-bg">
+  <div class="cta-inner" id="try">
+    <h2 data-i18n="cta_h2">Start running your portfolio on autopilot today</h2>
+    <p data-i18n="cta_p">Free to use. Bring your own Anthropic API key. No signup required.</p>
+    <a class="btn-primary" href="/app" style="font-size:16px;padding:16px 36px" data-i18n="cta_btn">Open CompanyForge →</a>
+    <p class="cta-note" data-i18n="cta_note">Works entirely in your browser · No data leaves your device · Zero monthly fee</p>
+  </div>
+</div>
+
+<footer>
+  <p data-i18n="footer">© 2026 CompanyForge by PQSafe · <a href="https://pqsafe.xyz" target="_blank" rel="noopener">pqsafe.xyz</a> · <a href="mailto:hello@companyforge.ai">hello@companyforge.ai</a></p>
+</footer>
 
 <script>
-// =============================================================================
-// CompanyForge MVP — single-file, browser-only, BYO API key
-// =============================================================================
-
-const STORAGE_KEYS = {
-  tenant: 'cf_tenant_id',
-  key: 'cf_api_key',
-  companies: 'cf_companies',
-  jobs: 'cf_jobs',
-  selectedCo: 'cf_selected_co'
-};
-
-const HOURLY_HKD = 250;  // assumed labor cost — used for savings counter
-const USD_HKD = 7.8;     // rough peg
-
-// v0.2: Anthropic list-price (USD per million tokens) — public pricing
-const MODEL_RATES = {
-  'claude-haiku-4-5-20251001': { in: 1.00,  out: 5.00,  label: 'Haiku 4.5' },
-  'claude-sonnet-4-6':         { in: 3.00,  out: 15.00, label: 'Sonnet 4.6' },
-  'claude-opus-4-6':           { in: 15.00, out: 75.00, label: 'Opus 4.6' }
-};
-function jobCostUsd(j) {
-  const r = MODEL_RATES[j.model] || { in: 3, out: 15 };
-  const inT = (j.usage && j.usage.input) || 0;
-  const outT = (j.usage && j.usage.output) || 0;
-  return (inT * r.in + outT * r.out) / 1e6;
-}
-
-const DEFAULT_COMPANIES = [
-  { slug: 'robotics-co', name: 'Robotics Co', icon: '🚁', color: '#6366f1',
-    memory: 'Robotics Co — UAV/robotics company building autonomous drones for inspection and industrial applications. Brand voice: technical, precise, B2B. Never invent technical specifications. Replace this memory with your own company context.' },
-  { slug: 'food-brand', name: 'Food Brand', icon: '🍽️', color: '#22c55e',
-    memory: 'Food Brand — specialty food company selling health-focused products direct-to-consumer and to institutions. Brand voice: warm, caring, plain language. Compliance: local food labelling and nutrition claims regulations. Replace this memory with your own company context.' },
-  { slug: 'fintech-co', name: 'Fintech Co', icon: '💳', color: '#f59e0b',
-    memory: 'Fintech Co — payments and financial technology venture. Brand voice: trustworthy, sober, regulatory-aware. Never describe as "deposit-taking" or unlicensed banking activity. Replace this memory with your own company context.' },
-  { slug: 'companyforge', name: 'CompanyForge', icon: '⚒️', color: '#8b5cf6',
-    memory: 'CompanyForge — the autonomous operations platform you are using right now. Multi-tenant, BYO API key, single-founder portfolio operating system. Differentiator: Band A/B/C/D approval gates + per-company memory injection + compliance-grade audit log.' },
-  { slug: 'trading-co', name: 'Trading Co', icon: '📈', color: '#14b8a6',
-    memory: 'Trading Co — algorithmic trading operation. Long/short equities across major exchanges. Brand voice: terse, quantitative. Never give financial advice to non-employees. Replace this memory with your own company context.' },
-  { slug: 'edu-platform', name: 'Edu Platform', icon: '🎓', color: '#ef4444',
-    memory: 'Edu Platform — education content and advisory platform. Publishes long-form, primary-source-cited articles autonomously via CompanyForge AI content officer. Editorial firewall: brand-neutral body, commercial CTA in footer only. License CC BY 4.0. Replace this memory with your own company context.' },
-  { slug: 'health-media', name: 'Health Media', icon: '🧴', color: '#3b82f6',
-    memory: 'Health Media — health and wellness content platform. Publishes research-backed articles autonomously via CompanyForge AI content officer. Mandatory safety warnings on all product-related content. Primary sources only: official pharmacopoeia, peer-reviewed papers, regulatory bodies. License CC BY 4.0. Replace this memory with your own company context.' },
-  { slug: 'new-venture', name: 'New Venture', icon: '🌱', color: '#eab308',
-    memory: 'New Venture — replace this with your company description. Include: what you do, who your customers are, your brand voice, what to never say, key contacts, and any compliance constraints.' }
-];
-
-const EXAMPLES = [
-  { prompt: 'Summarize the top 3 risks for an SME launching a new health-claim food product', co: 'food-brand' },
-  { prompt: 'Draft a polite email to a contract manufacturer asking for a sample run quote', co: 'robotics-co' },
-  { prompt: 'List 10 questions a YC partner is likely to ask about defensibility for an AI agents company', co: 'companyforge' },
-  { prompt: 'Sign the master services agreement with vendor X', co: null }  // Band D demo
-];
-
-// v0.2: Workflow templates — pre-built tasks per company. Investor signal: this is a workflow library, not a chat box.
-const WORKFLOW_TEMPLATES = {
-  pinnacle: [
-    { icon: '🔍', label: 'Competitor scan',  prompt: 'Identify the top 5 commercial UAV/inspection-drone competitors active in APAC this quarter and summarize their differentiators in a markdown table.' },
-    { icon: '📋', label: 'RFP draft',        prompt: 'Draft a 1-page RFP for a 10-unit pilot deployment to a HK utility customer covering scope, deliverables, timeline, and acceptance criteria.' },
-    { icon: '⚖️', label: 'Compliance check', prompt: 'List the HK CAD and CAAS regulatory checkpoints we must clear before commercial UAV inspection operations and what evidence we need to file.' }
-  ],
-  seniordeli: [
-    { icon: '🥗', label: 'Menu planner',     prompt: 'Plan a 7-day dysphagia-safe lunch menu (IDDSI level 5 minced & moist) with HK supermarket ingredients, max HKD 35 per meal, and call out any allergens.' },
-    { icon: '💬', label: 'Customer reply',   prompt: 'Draft a warm reply to an elderly customer who is unsure which texture level (IDDSI 4 vs 5) suits their parent post-stroke.' },
-    { icon: '🏷️', label: 'Label review',     prompt: 'Review a hypothetical product label claiming "improves swallowing" and rewrite it to be HK FEHD-compliant without health claims.' }
-  ],
-  capypay: [
-    { icon: '🛡️', label: 'Risk memo',        prompt: 'Draft a 1-page memo on the top 5 AML/sanctions-screening controls a HK MSO operating GBA cross-border SME corridors must implement.' },
-    { icon: '📑', label: 'TOS rewrite',      prompt: 'Rewrite a payment-platform Terms of Service paragraph so it clearly disclaims deposit-taking and emphasizes pass-through settlement.' },
-    { icon: '🗺️', label: 'GBA corridor',     prompt: 'Compare USD-CNH-HKD settlement options for a HK SME paying a Shenzhen supplier USD 50K monthly. Show fees, T+, and FX risk for each path.' }
-  ],
-  companyforge: [
-    { icon: '🎯', label: 'Pitch teardown',   prompt: 'Tear down the CompanyForge pitch as a YC partner would: 5 sharpest objections + how to disarm each in one sentence.' },
-    { icon: '🧱', label: 'Roadmap',          prompt: 'Propose a 3-month feature roadmap for CompanyForge given the goal is YC interview readiness. Group by Now / Next / Later.' },
-    { icon: '💵', label: 'Pricing model',    prompt: 'Design a 3-tier SaaS pricing model for CompanyForge (solo founder / multi-venture / enterprise) with rough monthly USD anchors and what each tier unlocks.' }
-  ],
-  linpig: [
-    { icon: '📊', label: 'Strategy memo',    prompt: 'Outline a long/short equity strategy memo for HK small-caps with momentum + value filters and a sketch of the risk controls.' },
-    { icon: '🚨', label: 'Drawdown post',    prompt: 'Draft an internal post-mortem template for any single-day drawdown >2% covering hypothesis, what happened, what we learned, what we changed.' }
-  ],
-  pumphq: [
-    { icon: '📣', label: 'Launch teaser',    prompt: 'Write 3 teaser social posts for an unnamed early-stage venture launching in 2 weeks. Curiosity-driven, no claims.' }
-  ],
-  botzan: [
-    { icon: '🤝', label: 'Partner outreach', prompt: 'Draft a cold outreach email to a HK service-robotics integrator proposing a co-development pilot for an indoor delivery use case.' }
-  ],
-  goldrushx: [
-    { icon: '⛏️', label: 'Site checklist',   prompt: 'Build a due diligence checklist for evaluating a small-scale exploration site in SE Asia covering legal, geological, environmental, and security dimensions.' }
-  ]
-};
-const GENERIC_TEMPLATES = [
-  { icon: '📝', label: 'Daily standup',  prompt: 'Draft a 5-bullet daily standup summarizing what was done yesterday, what is planned today, and any blockers across all my ventures.' },
-  { icon: '📧', label: 'Inbox triage',   prompt: 'Given a list of email subjects, triage each as: Reply now / Reply later / Delegate / Archive — and explain the rule used.' },
-  { icon: '🧠', label: 'Decision frame', prompt: 'Frame a hard decision I am facing using a Cost / Reversibility / Optionality matrix and recommend a default action.' }
-];
-
-// ---------- State ----------
-let state = {
-  tenant: null,
-  apiKey: null,
-  companies: [],
-  jobs: [],
-  selectedCoSlug: null,  // null = all
-  selectedJobId: null,
-  inFlight: new Set(),
-  jobFilter: 'all',      // v0.2: all | pending | running | failed
-  searchTerm: ''         // v0.2
-};
-
-// ---------- Persistence ----------
-function load() {
-  state.tenant = localStorage.getItem(STORAGE_KEYS.tenant);
-  if (!state.tenant) {
-    state.tenant = 't_' + Math.random().toString(36).slice(2, 10);
-    localStorage.setItem(STORAGE_KEYS.tenant, state.tenant);
+// ─── TRANSLATIONS ─────────────────────────────────────────────────────────────
+const T = {
+  en: {
+    nav_cta: 'Try free →',
+    hero_badge: 'Developer Preview · Browser-only MVP · BYO API key',
+    hero_h1: 'Run a portfolio of companies with zero staff',
+    hero_sub: 'CompanyForge by PQSafe — AI ops skills for the founder running 2+ companies at once. Per-company memory. 4-band approval gates. Post-quantum signed payments.',
+    hero_btn1: 'Start free — BYO API key',
+    hero_btn2: 'See how it works',
+    demo_portfolio: 'Portfolio', demo_active: 'Active', demo_idle: 'Idle', demo_running: 'Running',
+    demo_task: 'Summarise this week\'s customer emails and draft replies for approval →',
+    demo_job1: 'Summarise customer emails · NestPay',
+    demo_job2: 'Draft Q2 investor update · DriftCart',
+    demo_job3: 'Renew vendor contract · VaultMed · awaiting approval',
+    demo_detail_title: 'Job detail', demo_venture: 'Venture', demo_band: 'Band', demo_cost: 'Cost', demo_tokens: 'Tokens',
+    feat_label: 'Why CompanyForge',
+    feat_title: 'Everything a founder needs. Nothing an employee costs.',
+    feat_sub: 'Built for solo founders running multiple companies — or anyone who wants AI to do the operational work.',
+    f1_title: 'Per-company memory', f1_desc: 'Every task auto-prefixed with that venture\'s full context — team, tone, vendors, customers. No re-explaining each time.',
+    f2_title: 'Band A–D approval gates', f2_desc: 'Band A runs autonomously. Band D is hard-blocked client-side — AI physically cannot execute high-risk actions, even if instructed.',
+    f3_title: 'Full audit log', f3_desc: 'Every job logged with token cost, approval band, model, and outcome. CSV export for investors, boards, and regulators.',
+    f4_title: 'Browser-only, zero backend', f4_desc: 'Your data never touches our servers. Bring your own Anthropic API key. Nothing to install, no subscription, no vendor lock-in.',
+    f5_title: 'Multi-venture dispatch', f5_desc: 'Run tasks across your entire portfolio in one place. Route by company, see all jobs in a unified feed, track cost by venture.',
+    f6_title: 'Compliance-first design', f6_desc: 'Approval bands, hard blocks, and audit trails built for regulated industries. Suitable for fintech, healthcare, legal, and beyond.',
+    how_label: 'How it works', how_title: 'Up and running in 3 minutes',
+    how_sub: 'No servers. No DevOps. Just paste your API key and start delegating.',
+    s1_title: 'Add your companies', s1_desc: 'Create a profile for each venture — name, description, tone, vendor list, and any context the AI should always know.',
+    s2_title: 'Paste your API key', s2_desc: 'Enter your Anthropic API key. It stays in your browser. No account required. Choose Haiku, Sonnet, or Opus per task.',
+    s3_title: 'Type a task, hit send', s3_desc: 'The AI runs the task with full company context. Band A tasks complete automatically. Band C tasks pause for your approval.',
+    s4_title: 'Review and scale', s4_desc: 'Every job is logged with cost and outcome. Watch your savings badge grow as the AI handles what used to take hours.',
+    band_label: 'Approval system', band_title: 'Four bands. Full control.',
+    band_sub: 'Set the risk tolerance for each venture. The AI respects it absolutely.',
+    ba_name: 'Fully autonomous', ba_desc: 'AI runs the task end-to-end with no human review. Ideal for research, drafting, and summarisation.',
+    bb_name: 'Auto with log', bb_desc: 'Runs automatically but creates a detailed audit entry. You review after the fact.',
+    bc_name: 'Pause for approval', bc_desc: 'AI drafts and pauses. You review, edit, then approve. Nothing external happens without your sign-off.',
+    bd_name: 'Hard blocked', bd_desc: 'Client-side block. AI cannot execute contracts, payments, or high-risk actions — even if instructed.',
+    cta_h2: 'Start running your portfolio on autopilot today',
+    cta_p: 'Free to use. Bring your own Anthropic API key. No signup required.',
+    cta_btn: 'Open CompanyForge →',
+    cta_note: 'Works entirely in your browser · No data leaves your device · Zero monthly fee',
+    pq_label: 'The Payment Layer',
+    pq_title: 'Every agent payment is a post-quantum signed mandate.',
+    pq_sub: 'When CompanyForge executes a payment, it calls PQSafe — the cryptographic trust primitive for the agent economy. Every disbursement is a SpendEnvelope: post-quantum signed, revocable mid-flight, logged with a hash that survives regulatory audit. Band D is hard-blocked client-side. The agent cannot wire money without your explicit confirmation.',
+    pq_f1_title: 'Post-quantum SpendEnvelope',
+    pq_f1_desc: 'Every payment mandate is ML-DSA-65 signed — quantum-resistant by default. Not a Stripe webhook. A cryptographic mandate built for the agent economy.',
+    pq_f2_title: 'Revocable mid-flight',
+    pq_f2_desc: 'SpendEnvelopes can be cancelled before settlement. If an agent task goes wrong, you can pull the payment back — a capability no traditional payment API offers.',
+    pq_f3_title: 'Compliance-grade audit trail',
+    pq_f3_desc: 'Every SpendEnvelope generates a hash-anchored log entry. Admissible for regulatory audit. Built for 7-year retention from day one.',
+    pq_primitive: 'CompanyForge by PQSafe — <a href="https://pqsafe.xyz" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600">pqsafe.xyz</a> is the primitive. This is the application.',
+    footer: '© 2026 CompanyForge by PQSafe · <a href="https://pqsafe.xyz" target="_blank" rel="noopener">pqsafe.xyz</a> · <a href="mailto:hello@companyforge.ai">hello@companyforge.ai</a>',
+  },
+  'zh-TW': {
+    nav_cta: '免費試用 →',
+    hero_badge: '開發者預覽版 · 純瀏覽器 MVP · 自帶 API key',
+    hero_h1: '以零員工管理您的創業組合',
+    hero_sub: 'CompanyForge by PQSafe — 專為同時運營兩家以上公司的創業者而設的 AI 運營技能。公司專屬記憶。4 級審批閘門。後量子簽名支付。',
+    hero_btn1: '免費開始 — 自備 API 金鑰',
+    hero_btn2: '了解運作原理',
+    demo_portfolio: '項目組合', demo_active: '運行中', demo_idle: '待機', demo_running: '執行中',
+    demo_task: '摘要本週客戶郵件，並起草回覆待審批 →',
+    demo_job1: '摘要客戶郵件 · NestPay',
+    demo_job2: '起草 Q2 投資人報告 · DriftCart',
+    demo_job3: '續簽供應商合約 · VaultMed · 待審批',
+    demo_detail_title: '任務詳情', demo_venture: '創業項目', demo_band: '審批級別', demo_cost: '費用', demo_tokens: '代幣數',
+    feat_label: '為何選擇 CompanyForge',
+    feat_title: '創業者所需的一切。無需員工開支。',
+    feat_sub: '專為管理多個公司的獨立創業者而設——或任何希望讓 AI 處理日常運營的人。',
+    f1_title: '公司專屬記憶', f1_desc: '每項任務自動附帶該創業項目的完整背景——團隊、語調、供應商、客戶。無需每次重複解釋。',
+    f2_title: 'A–D 級審批閘門', f2_desc: 'A 級全自主運行。D 級在客戶端硬性封鎖——即使您下令，AI 也無法執行高風險操作。',
+    f3_title: '完整審計記錄', f3_desc: '每項任務均記錄代幣成本、審批級別、模型及結果。支援 CSV 匯出，適用於投資人、董事會及監管機構。',
+    f4_title: '純瀏覽器，零後端', f4_desc: '您的數據從不經過我們的服務器。自備 Anthropic API 金鑰。無需安裝，無需訂閱，無供應商鎖定。',
+    f5_title: '多項目調度', f5_desc: '在一個平台上跨整個組合執行任務。按公司篩選，查看統一任務流，按創業項目追蹤成本。',
+    f6_title: '合規優先設計', f6_desc: '審批級別、硬性封鎖及審計追蹤，專為受監管行業而設。適用於金融科技、醫療、法律等領域。',
+    how_label: '運作原理', how_title: '3 分鐘即可上手',
+    how_sub: '無需服務器，無需 DevOps。貼上您的 API 金鑰，即可開始委派任務。',
+    s1_title: '新增您的公司', s1_desc: '為每個創業項目建立檔案——名稱、描述、語調、供應商清單，以及 AI 應始終了解的所有背景。',
+    s2_title: '貼上您的 API 金鑰', s2_desc: '輸入您的 Anthropic API 金鑰。金鑰僅存儲在您的瀏覽器中。無需賬戶。按任務選擇 Haiku、Sonnet 或 Opus。',
+    s3_title: '輸入任務，立即執行', s3_desc: 'AI 以完整公司背景執行任務。A 級任務自動完成。C 級任務暫停待您審批。',
+    s4_title: '審查並擴展', s4_desc: '每項任務均記錄成本及結果。隨著 AI 處理原本需數小時的工作，您的節省數字持續增長。',
+    band_label: '審批系統', band_title: '四個級別。完全掌控。',
+    band_sub: '為每個創業項目設定風險承受度。AI 絕對遵守。',
+    ba_name: '全自主', ba_desc: 'AI 端到端執行任務，無需人工審閱。適用於研究、起草及摘要等場景。',
+    bb_name: '自動記錄', bb_desc: '自動執行，並創建詳細審計記錄。您事後審查。',
+    bc_name: '暫停待審', bc_desc: 'AI 起草後暫停。您審查、編輯，然後審批。未經您批准，不會對外執行任何操作。',
+    bd_name: '硬性封鎖', bd_desc: '客戶端封鎖。即使受到指令，AI 也無法執行合約、付款或高風險操作。',
+    cta_h2: '立即讓您的創業組合進入自動駕駛模式',
+    cta_p: '免費使用。自備 Anthropic API 金鑰。無需註冊。',
+    cta_btn: '立即開啟 CompanyForge →',
+    cta_note: '完全在您的瀏覽器中運行 · 數據不離開您的設備 · 零月費',
+    pq_label: '支付層',
+    pq_title: '每筆代理支付均為後量子簽名授權。',
+    pq_sub: '當 CompanyForge 執行支付時，會調用 PQSafe — 代理經濟的密碼學信任原語。每筆款項均為 SpendEnvelope：後量子簽名、可在結算前撤銷、附帶可通過監管審計的哈希日誌。D 級在客戶端硬性封鎖。未經您的明確確認，代理無法轉賬。',
+    pq_f1_title: '後量子 SpendEnvelope',
+    pq_f1_desc: '每筆支付授權均採用 ML-DSA-65 簽名——預設抗量子攻擊。不是 Stripe Webhook，而是為代理經濟設計的密碼學授權。',
+    pq_f2_title: '可中途撤銷',
+    pq_f2_desc: 'SpendEnvelope 可在結算前取消。若代理任務出錯，您可撤回付款——這是傳統支付 API 無法提供的能力。',
+    pq_f3_title: '合規級審計追蹤',
+    pq_f3_desc: '每個 SpendEnvelope 均生成哈希錨定日誌條目，可用於監管審計，從第一天起即支持 7 年留存。',
+    pq_primitive: 'CompanyForge by PQSafe — <a href="https://pqsafe.xyz" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600">pqsafe.xyz</a> 是底層原語。這是它的應用。',
+    footer: '© 2026 CompanyForge by PQSafe · <a href="https://pqsafe.xyz" target="_blank" rel="noopener">pqsafe.xyz</a> · <a href="mailto:hello@companyforge.ai">hello@companyforge.ai</a>',
+  },
+  'zh-CN': {
+    nav_cta: '免费试用 →',
+    hero_badge: '开发者预览版 · 纯浏览器 MVP · 自带 API key',
+    hero_h1: '以零员工管理您的创业组合',
+    hero_sub: 'CompanyForge by PQSafe — 专为同时运营两家以上公司的创业者而设的 AI 运营技能。公司专属记忆。4 级审批闸门。后量子签名支付。',
+    hero_btn1: '免费开始 — 自备 API 密钥',
+    hero_btn2: '了解运作原理',
+    demo_portfolio: '项目组合', demo_active: '运行中', demo_idle: '待机', demo_running: '执行中',
+    demo_task: '汇总本周客户邮件，并起草回复待审批 →',
+    demo_job1: '汇总客户邮件 · NestPay',
+    demo_job2: '起草 Q2 投资人报告 · DriftCart',
+    demo_job3: '续签供应商合同 · VaultMed · 待审批',
+    demo_detail_title: '任务详情', demo_venture: '创业项目', demo_band: '审批级别', demo_cost: '费用', demo_tokens: '令牌数',
+    feat_label: '为何选择 CompanyForge',
+    feat_title: '创业者所需的一切。无需员工开支。',
+    feat_sub: '专为管理多家公司的独立创业者而设——或任何希望让 AI 处理日常运营的人。',
+    f1_title: '公司专属记忆', f1_desc: '每项任务自动附带该创业项目的完整背景——团队、语调、供应商、客户。无需每次重复解释。',
+    f2_title: 'A–D 级审批闸门', f2_desc: 'A 级全自主运行。D 级在客户端硬性封锁——即使您下令，AI 也无法执行高风险操作。',
+    f3_title: '完整审计记录', f3_desc: '每项任务均记录令牌成本、审批级别、模型及结果。支持 CSV 导出，适用于投资人、董事会及监管机构。',
+    f4_title: '纯浏览器，零后端', f4_desc: '您的数据从不经过我们的服务器。自备 Anthropic API 密钥。无需安装，无需订阅，无供应商锁定。',
+    f5_title: '多项目调度', f5_desc: '在一个平台上跨整个组合执行任务。按公司筛选，查看统一任务流，按创业项目追踪成本。',
+    f6_title: '合规优先设计', f6_desc: '审批级别、硬性封锁及审计追踪，专为受监管行业而设。适用于金融科技、医疗、法律等领域。',
+    how_label: '运作原理', how_title: '3 分钟即可上手',
+    how_sub: '无需服务器，无需 DevOps。粘贴您的 API 密钥，即可开始委派任务。',
+    s1_title: '添加您的公司', s1_desc: '为每个创业项目创建档案——名称、描述、语调、供应商列表，以及 AI 应始终了解的所有背景。',
+    s2_title: '粘贴您的 API 密钥', s2_desc: '输入您的 Anthropic API 密钥。密钥仅存储在您的浏览器中。无需账户。按任务选择 Haiku、Sonnet 或 Opus。',
+    s3_title: '输入任务，立即执行', s3_desc: 'AI 以完整公司背景执行任务。A 级任务自动完成。C 级任务暂停待您审批。',
+    s4_title: '审查并扩展', s4_desc: '每项任务均记录成本及结果。随着 AI 处理原本需数小时的工作，您的节省数字持续增长。',
+    band_label: '审批系统', band_title: '四个级别。完全掌控。',
+    band_sub: '为每个创业项目设定风险承受度。AI 绝对遵守。',
+    ba_name: '全自主', ba_desc: 'AI 端到端执行任务，无需人工审阅。适用于研究、起草及摘要等场景。',
+    bb_name: '自动记录', bb_desc: '自动执行，并创建详细审计记录。您事后审查。',
+    bc_name: '暂停待审', bc_desc: 'AI 起草后暂停。您审查、编辑，然后审批。未经您批准，不会对外执行任何操作。',
+    bd_name: '硬性封锁', bd_desc: '客户端封锁。即使受到指令，AI 也无法执行合同、付款或高风险操作。',
+    cta_h2: '立即让您的创业组合进入自动驾驶模式',
+    cta_p: '免费使用。自备 Anthropic API 密钥。无需注册。',
+    cta_btn: '立即打开 CompanyForge →',
+    cta_note: '完全在您的浏览器中运行 · 数据不离开您的设备 · 零月费',
+    pq_label: '支付层',
+    pq_title: '每笔代理支付均为后量子签名授权。',
+    pq_sub: '当 CompanyForge 执行支付时，会调用 PQSafe — 代理经济的密码学信任原语。每笔款项均为 SpendEnvelope：后量子签名、可在结算前撤销、附带可通过监管审计的哈希日志。D 级在客户端硬性封锁。未经您的明确确认，代理无法转账。',
+    pq_f1_title: '后量子 SpendEnvelope',
+    pq_f1_desc: '每笔支付授权均采用 ML-DSA-65 签名——默认抗量子攻击。不是 Stripe Webhook，而是为代理经济设计的密码学授权。',
+    pq_f2_title: '可中途撤销',
+    pq_f2_desc: 'SpendEnvelope 可在结算前取消。若代理任务出错，您可撤回付款——这是传统支付 API 无法提供的能力。',
+    pq_f3_title: '合规级审计追踪',
+    pq_f3_desc: '每个 SpendEnvelope 均生成哈希锚定日志条目，可用于监管审计，从第一天起即支持 7 年留存。',
+    pq_primitive: 'CompanyForge by PQSafe — <a href="https://pqsafe.xyz" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600">pqsafe.xyz</a> 是底层原语。这是它的应用。',
+    footer: '© 2026 CompanyForge by PQSafe · <a href="https://pqsafe.xyz" target="_blank" rel="noopener">pqsafe.xyz</a> · <a href="mailto:hello@companyforge.ai">hello@companyforge.ai</a>',
   }
-  state.apiKey = localStorage.getItem(STORAGE_KEYS.key);
-  try { state.companies = JSON.parse(localStorage.getItem(STORAGE_KEYS.companies)) || DEFAULT_COMPANIES; }
-  catch (e) { state.companies = DEFAULT_COMPANIES; }
-  try { state.jobs = JSON.parse(localStorage.getItem(STORAGE_KEYS.jobs)) || []; }
-  catch (e) { state.jobs = []; }
-  state.selectedCoSlug = localStorage.getItem(STORAGE_KEYS.selectedCo) || null;
-  // Reset any zombie 'running' jobs from a previous browser session
-  state.jobs.forEach(j => { if (j.status === 'running') j.status = 'stopped'; });
-}
-function saveCompanies() { localStorage.setItem(STORAGE_KEYS.companies, JSON.stringify(state.companies)); }
-function saveJobs() {
-  // Persist a slim version (truncate output to keep localStorage small)
-  const slim = state.jobs.map(j => ({ ...j, output: (j.output || '').slice(0, 50000) }));
-  localStorage.setItem(STORAGE_KEYS.jobs, JSON.stringify(slim));
-}
-function saveKey() { localStorage.setItem(STORAGE_KEYS.key, state.apiKey || ''); }
+};
 
-// ---------- Approval band classifier (mirrors server.js) ----------
-function classifyBand(prompt) {
-  const p = (prompt || '').toLowerCase();
-  const D = ['sign contract', 'sign the', 'make payment', 'transfer money', 'wire transfer', 'legal acceptance', 'board meeting'];
-  if (D.some(k => p.includes(k))) return 'D';
-  const C = ['send email', 'send the email', 'publish', 'post to', 'submit', 'reply to', 'send to', 'place order', 'send message'];
-  if (C.some(k => p.includes(k))) return 'C';
-  const B = ['update dashboard', 'organize file', 'schedule reminder', 'update calendar'];
-  if (B.some(k => p.includes(k))) return 'B';
-  return 'A';
+// ─── APPLY LANG ───────────────────────────────────────────────────────────────
+function applyLang(lang) {
+  const t = T[lang] || T.en;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-value]').forEach(el => {
+    const key = el.dataset.i18nValue;
+    if (t[key] !== undefined) el.value = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  localStorage.setItem('cf_lang', lang);
 }
 
-// ---------- Labor estimate ----------
-function estimateLabor(prompt) {
-  const p = (prompt || '').toLowerCase();
-  if (p.includes('research') || p.includes('report') || p.includes('analysis') || p.includes('summarize')) return 60;
-  if (p.includes('draft') || p.includes('reply') || p.includes('email') || p.includes('message')) return 20;
-  if (p.includes('list') || p.includes('outline')) return 15;
-  if (p.includes('post') || p.includes('social')) return 10;
-  return 15;
-}
-
-// ---------- API key validation ----------
-async function validateKey(key) {
+// ─── DETECT LANG ──────────────────────────────────────────────────────────────
+async function detectLang() {
+  const saved = localStorage.getItem('cf_lang');
+  if (saved && T[saved]) return saved;
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 8,
-        messages: [{ role: 'user', content: 'Reply with the single word OK' }]
-      })
-    });
-    if (r.status === 401 || r.status === 403) return { ok: false, err: 'Authentication failed (' + r.status + '). Check the key.' };
-    if (!r.ok) {
-      const txt = await r.text().catch(() => '');
-      return { ok: false, err: 'HTTP ' + r.status + ': ' + txt.slice(0, 140) };
-    }
-    return { ok: true };
-  } catch (e) {
-    return { ok: false, err: 'Network error: ' + e.message };
+    const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+    const d = await r.json();
+    const cc = (d.country_code || '').toUpperCase();
+    if (['CN'].includes(cc)) return 'zh-CN';
+    if (['HK', 'TW', 'MO'].includes(cc)) return 'zh-TW';
+  } catch(_) {
+    const bl = navigator.language || '';
+    if (/^zh-(TW|HK|MO)/i.test(bl)) return 'zh-TW';
+    if (/^zh/i.test(bl)) return 'zh-CN';
   }
+  return 'en';
 }
 
-// ---------- Streaming Anthropic call ----------
-async function callClaudeStream({ prompt, model, onChunk, onDone, onError, onUsage }) {
-  try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': state.apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: 1500,
-        stream: true,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    if (!r.ok) {
-      const txt = await r.text().catch(() => '');
-      onError(new Error('HTTP ' + r.status + ' ' + txt.slice(0, 200)));
-      return;
-    }
-    const reader = r.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop();
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const data = line.slice(6).trim();
-        if (!data || data === '[DONE]') continue;
-        try {
-          const evt = JSON.parse(data);
-          if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
-            onChunk(evt.delta.text);
-          } else if (evt.type === 'message_start' && evt.message && evt.message.usage) {
-            // Anthropic emits input tokens up-front
-            if (onUsage) onUsage({ input: evt.message.usage.input_tokens || 0, output: evt.message.usage.output_tokens || 0 });
-          } else if (evt.type === 'message_delta' && evt.usage) {
-            // Final output token count arrives in message_delta
-            if (onUsage) onUsage({ output: evt.usage.output_tokens || 0 });
-          } else if (evt.type === 'message_stop') {
-            onDone();
-            return;
-          } else if (evt.type === 'error') {
-            onError(new Error(evt.error?.message || 'stream error'));
-            return;
-          }
-        } catch (e) {}
-      }
-    }
-    onDone();
-  } catch (e) {
-    onError(e);
-  }
-}
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+// Apply saved lang immediately to avoid flash
+const savedLang = localStorage.getItem('cf_lang');
+if (savedLang && T[savedLang]) applyLang(savedLang);
 
-// ---------- Job pipeline ----------
-function createJob(prompt, model, companySlug, parentJobId) {
-  if (!prompt.trim()) return;
-  const id = 'j_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
-  const band = classifyBand(prompt);
-  const labor = estimateLabor(prompt);
-  const company = companySlug ? state.companies.find(c => c.slug === companySlug) : null;
-  let context = '';
-  if (company) {
-    context = '<company_context name="' + company.name + '">\n' + company.memory + '\n</company_context>\n\n';
-  }
-  // v0.2: chained jobs include parent output as prior context
-  let chainContext = '';
-  if (parentJobId) {
-    const parent = state.jobs.find(x => x.id === parentJobId);
-    if (parent) {
-      chainContext = '<previous_step prompt="' + escape(parent.prompt).slice(0, 200) + '">\n' + (parent.output || '').slice(0, 4000) + '\n</previous_step>\n\n';
-    }
-  }
-  const fullPrompt = context + chainContext + '<task>\n' + prompt + '\n</task>';
+detectLang().then(lang => applyLang(lang));
 
-  const job = {
-    id, prompt, model, company: companySlug || null,
-    band, status: 'running', output: '',
-    created: new Date().toISOString(),
-    completed: null,
-    laborMinutes: labor,
-    parentJobId: parentJobId || null,
-    usage: { input: 0, output: 0 },
-    auditLog: [{ ts: new Date().toISOString(), event: 'created', by: 'human' }]
-  };
-  if (company) job.auditLog.push({ ts: new Date().toISOString(), event: 'context_injected', company: companySlug });
-  if (parentJobId) job.auditLog.push({ ts: new Date().toISOString(), event: 'chained_from', parent: parentJobId });
-
-  // Band D: hard-stop, never call API
-  if (band === 'D') {
-    job.status = 'rejected';
-    job.completed = job.created;
-    job.output = '⛔ Band D — Human-only action. AI cannot execute contracts, payments, or legal acceptance. This job was logged but not run.';
-    job.auditLog.push({ ts: job.created, event: 'blocked_band_d', by: 'system' });
-    state.jobs.unshift(job);
-    saveJobs();
-    state.selectedJobId = id;
-    renderAll();
-    return;
-  }
-
-  state.jobs.unshift(job);
-  state.selectedJobId = id;
-  state.inFlight.add(id);
-  saveJobs();
-  renderAll();
-
-  callClaudeStream({
-    prompt: fullPrompt,
-    model,
-    onUsage: (u) => {
-      if (u.input != null) job.usage.input = u.input;
-      if (u.output != null) job.usage.output = u.output;
-      if (state.selectedJobId === id) renderDetail();
-    },
-    onChunk: (text) => {
-      job.output += text;
-      // Re-render only if this job is still selected (cheap update)
-      if (state.selectedJobId === id) renderDetail();
-      renderJobsList();  // update card preview
-    },
-    onDone: () => {
-      job.completed = new Date().toISOString();
-      if (band === 'C') {
-        job.status = 'awaiting_approval';
-        job.auditLog.push({ ts: job.completed, event: 'awaiting_approval' });
-        toast('Band C task ready for your approval →');
-      } else {
-        job.status = 'done';
-        job.auditLog.push({ ts: job.completed, event: 'done' });
-      }
-      state.inFlight.delete(id);
-      saveJobs();
-      renderAll();
-    },
-    onError: (err) => {
-      job.completed = new Date().toISOString();
-      job.status = 'failed';
-      job.output += '\n\n[error] ' + err.message;
-      job.auditLog.push({ ts: job.completed, event: 'failed', error: err.message });
-      state.inFlight.delete(id);
-      saveJobs();
-      renderAll();
-    }
-  });
-}
-
-// v0.2: Chain a completed job's output into a fresh task input
-function chainJob(parentId) {
-  const parent = state.jobs.find(x => x.id === parentId);
-  if (!parent) return;
-  const inp = $('#taskInput');
-  inp.value = 'Continue from the previous step. ';
-  inp.dataset.parentId = parentId;
-  inp.style.height = 'auto';
-  inp.style.height = Math.min(inp.scrollHeight + 8, 200) + 'px';
-  inp.focus();
-  toast('Chained from job ' + parentId.slice(0, 10) + '… — type the next step');
-}
-
-// v0.2: CSV export of full audit log
-function exportCsv() {
-  const rows = [['job_id', 'created', 'completed', 'company', 'band', 'status', 'model', 'input_tokens', 'output_tokens', 'usd_cost', 'labor_min_saved', 'parent_job', 'prompt']];
-  state.jobs.forEach(j => {
-    rows.push([
-      j.id,
-      j.created || '',
-      j.completed || '',
-      j.company || '',
-      j.band,
-      j.status,
-      j.model,
-      (j.usage && j.usage.input) || 0,
-      (j.usage && j.usage.output) || 0,
-      jobCostUsd(j).toFixed(6),
-      j.laborMinutes || 0,
-      j.parentJobId || '',
-      (j.prompt || '').replace(/\r?\n/g, ' ')
-    ]);
-  });
-  const csv = rows.map(r => r.map(c => {
-    const s = String(c);
-    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-  }).join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'companyforge-audit-' + state.tenant + '-' + new Date().toISOString().slice(0, 10) + '.csv';
-  a.click();
-}
-
-function approveJob(id) {
-  const j = state.jobs.find(x => x.id === id);
-  if (!j) return;
-  j.status = 'done';
-  j.auditLog.push({ ts: new Date().toISOString(), event: 'approved', by: 'human' });
-  saveJobs();
-  renderAll();
-  toast('Approved ✓');
-}
-function rejectJob(id) {
-  const j = state.jobs.find(x => x.id === id);
-  if (!j) return;
-  j.status = 'rejected';
-  j.auditLog.push({ ts: new Date().toISOString(), event: 'rejected', by: 'human' });
-  saveJobs();
-  renderAll();
-  toast('Rejected');
-}
-
-// ---------- Render helpers ----------
-function $(s) { return document.querySelector(s); }
-function fmtTime(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = (now - d) / 1000;
-  if (diff < 60) return Math.floor(diff) + 's ago';
-  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
-  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-  return d.toLocaleDateString();
-}
-function escape(s) { return (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-
-function renderHeader() {
-  const minutesSaved = state.jobs
-    .filter(j => j.status === 'done')
-    .reduce((s, j) => s + (j.laborMinutes || 15), 0);
-  const hkd = Math.round(minutesSaved / 60 * HOURLY_HKD);
-  $('#savingsBadge').textContent = 'HKD ' + hkd.toLocaleString() + ' saved';
-}
-
-function renderRail() {
-  const list = $('#companyList');
-  const allItem = `<div class="company-item ${state.selectedCoSlug === null ? 'active' : ''}" data-slug="">
-    <div class="company-icon" style="background:rgba(99,102,241,.2)">∞</div>
-    <div class="company-name">All companies</div>
-    <div class="company-pulse"></div>
-  </div>`;
-  const items = state.companies.map(c => {
-    const hasRunning = state.jobs.some(j => j.company === c.slug && j.status === 'running');
-    return `<div class="company-item ${state.selectedCoSlug === c.slug ? 'active' : ''} ${hasRunning ? 'has-running' : ''}" data-slug="${c.slug}">
-      <div class="company-icon" style="background:${c.color}33;color:${c.color}">${c.icon}</div>
-      <div class="company-name">${escape(c.name)}</div>
-      <button class="delete-co-btn" data-del="${c.slug}" title="Delete">×</button>
-      <div class="company-pulse"></div>
-    </div>`;
-  }).join('');
-  list.innerHTML = allItem + items;
-  list.querySelectorAll('.company-item').forEach(el => {
-    el.addEventListener('click', (e) => {
-      if (e.target.classList.contains('delete-co-btn')) return;
-      const slug = el.dataset.slug || null;
-      state.selectedCoSlug = slug;
-      localStorage.setItem(STORAGE_KEYS.selectedCo, slug || '');
-      renderAll();
-    });
-  });
-  list.querySelectorAll('.delete-co-btn').forEach(b => {
-    b.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const slug = b.dataset.del;
-      if (!confirm('Delete company "' + slug + '"? This does not delete its past jobs.')) return;
-      state.companies = state.companies.filter(c => c.slug !== slug);
-      if (state.selectedCoSlug === slug) state.selectedCoSlug = null;
-      saveCompanies();
-      renderAll();
-    });
-  });
-  // Selected label in input hint
-  const co = state.selectedCoSlug ? state.companies.find(c => c.slug === state.selectedCoSlug) : null;
-  $('#selectedCoLabel').textContent = co ? co.name : 'All companies';
-}
-
-function renderJobsList() {
-  const wrap = $('#jobsList');
-  // v0.2: counts for filter pills (always over the company-scoped set)
-  let scoped = state.jobs;
-  if (state.selectedCoSlug) scoped = scoped.filter(j => j.company === state.selectedCoSlug);
-  const counts = {
-    all: scoped.length,
-    pending: scoped.filter(j => j.status === 'awaiting_approval').length,
-    running: scoped.filter(j => j.status === 'running').length,
-    failed: scoped.filter(j => j.status === 'failed').length
-  };
-  ['all', 'pending', 'running', 'failed'].forEach(k => {
-    const el = document.getElementById('cnt-' + k);
-    if (el) el.textContent = counts[k];
-  });
-  document.querySelectorAll('.filter-pill').forEach(p => {
-    p.classList.toggle('active', p.dataset.filter === state.jobFilter);
-  });
-
-  // v0.2: apply filter + search
-  let visible = scoped;
-  if (state.jobFilter === 'pending') visible = visible.filter(j => j.status === 'awaiting_approval');
-  else if (state.jobFilter === 'running') visible = visible.filter(j => j.status === 'running');
-  else if (state.jobFilter === 'failed') visible = visible.filter(j => j.status === 'failed');
-  if (state.searchTerm) {
-    const q = state.searchTerm.toLowerCase();
-    visible = visible.filter(j =>
-      (j.prompt || '').toLowerCase().includes(q) ||
-      (j.output || '').toLowerCase().includes(q));
-  }
-
-  if (visible.length === 0) {
-    const isFilteredEmpty = state.searchTerm || state.jobFilter !== 'all';
-    if (isFilteredEmpty) {
-      wrap.innerHTML = `<div class="jobs-empty"><div style="font-size:36px">🔍</div><h3>No matching jobs</h3><p style="font-size:12px">Try clearing the search or selecting "All".</p></div>`;
-      return;
-    }
-    wrap.innerHTML = `<div class="jobs-empty">
-      <div style="font-size:36px">⚒</div>
-      <h3>No jobs yet${state.selectedCoSlug ? ' for this company' : ''}</h3>
-      <p style="font-size:12px">Type a task above to run your first agent. Try one of these:</p>
-      <div class="examples">
-        ${EXAMPLES.map(e => {
-          const band = classifyBand(e.prompt);
-          return `<div class="example-card" data-ex="${escape(e.prompt)}" data-co="${e.co || ''}">
-            ${escape(e.prompt)} <span class="example-band band-${band}">Band ${band}</span>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
-    wrap.querySelectorAll('.example-card').forEach(el => {
-      el.addEventListener('click', () => {
-        $('#taskInput').value = el.dataset.ex;
-        if (el.dataset.co) {
-          state.selectedCoSlug = el.dataset.co;
-          localStorage.setItem(STORAGE_KEYS.selectedCo, el.dataset.co);
-          renderRail();
-        }
-        $('#taskInput').focus();
-      });
-    });
-    return;
-  }
-  wrap.innerHTML = visible.map(j => {
-    const co = j.company ? state.companies.find(c => c.slug === j.company) : null;
-    const preview = (j.output || '').slice(0, 120).replace(/\n+/g, ' ');
-    return `<div class="job-card ${j.status} ${state.selectedJobId === j.id ? 'selected' : ''}" data-id="${j.id}">
-      <div class="job-card-header">
-        <div class="job-status-dot status-${j.status}"></div>
-        <span class="example-band band-${j.band}">Band ${j.band}</span>
-        ${co ? `<span class="job-co-tag">${co.icon} ${escape(co.name)}</span>` : ''}
-        <span class="job-time">${fmtTime(j.created)}</span>
-      </div>
-      <div class="job-prompt">${escape(j.prompt)}</div>
-      <div class="job-meta">
-        ${(MODEL_RATES[j.model] && MODEL_RATES[j.model].label) || j.model.replace('claude-', '').replace('-20251001', '')} ·
-        ${j.status === 'running' ? '⚡ running' : j.status === 'awaiting_approval' ? '⏸ awaiting approval' : j.status} ·
-        ~${j.laborMinutes}min saved
-        ${j.usage && (j.usage.input || j.usage.output) ? ' · ' + (j.usage.input + j.usage.output) + ' tok · $' + jobCostUsd(j).toFixed(4) : ''}
-        ${j.parentJobId ? ' · 🔗 chained' : ''}
-        ${preview && j.status !== 'running' ? `<div style="margin-top:6px;color:var(--text-3);font-size:11px">${escape(preview)}${j.output.length > 120 ? '…' : ''}</div>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-  wrap.querySelectorAll('.job-card').forEach(el => {
-    el.addEventListener('click', () => {
-      state.selectedJobId = el.dataset.id;
-      renderAll();
-    });
-  });
-}
-
-// v0.2: render workflow templates row scoped to selected company
-function renderTemplates() {
-  const row = $('#templatesRow');
-  if (!row) return;
-  const list = state.selectedCoSlug && WORKFLOW_TEMPLATES[state.selectedCoSlug]
-    ? WORKFLOW_TEMPLATES[state.selectedCoSlug]
-    : GENERIC_TEMPLATES;
-  row.innerHTML = list.map(t => {
-    const band = classifyBand(t.prompt);
-    return `<button class="template-chip" data-tpl="${escape(t.prompt)}">
-      ${t.icon} ${escape(t.label)} <span class="chip-band band-${band}">${band}</span>
-    </button>`;
-  }).join('');
-  row.querySelectorAll('.template-chip').forEach(el => {
-    el.addEventListener('click', () => {
-      const inp = $('#taskInput');
-      inp.value = el.dataset.tpl;
-      inp.style.height = 'auto';
-      inp.style.height = Math.min(inp.scrollHeight + 8, 200) + 'px';
-      inp.focus();
-    });
-  });
-}
-
-function renderDetail() {
-  const panel = $('#detailPanel');
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const todayJobs = state.jobs.filter(j => new Date(j.created) >= today);
-  const totalMin = state.jobs.filter(j => j.status === 'done').reduce((s, j) => s + (j.laborMinutes || 15), 0);
-  const hkd = Math.round(totalMin / 60 * HOURLY_HKD);
-  // v0.2: total spend
-  const totalUsd = state.jobs.reduce((s, x) => s + jobCostUsd(x), 0);
-  const totalHkdSpend = totalUsd * USD_HKD;
-  const ratio = totalHkdSpend > 0 ? (hkd / totalHkdSpend).toFixed(0) : '∞';
-  const j = state.selectedJobId ? state.jobs.find(x => x.id === state.selectedJobId) : null;
-
-  let html = `<div class="savings-card">
-    <div class="savings-num">HKD ${hkd.toLocaleString()}</div>
-    <div class="savings-sub">labor displaced · ${Math.round(totalMin)} minutes · ${state.jobs.filter(x => x.status === 'done').length} jobs done</div>
-  </div>
-  <div class="cost-card">
-    <div>
-      <div class="label">API spend</div>
-      <div class="num">$${totalUsd.toFixed(4)} <span style="font-size:11px;color:var(--text-3)">USD</span></div>
-    </div>
-    <div style="text-align:right">
-      <div class="label">ROI</div>
-      <div class="ratio">${ratio}× </div>
-    </div>
-  </div>
-  <div class="stat-grid">
-    <div class="stat-card"><div class="stat-num">${todayJobs.length}</div><div class="stat-label">Jobs today</div></div>
-    <div class="stat-card"><div class="stat-num">${state.jobs.filter(x => x.status === 'awaiting_approval').length}</div><div class="stat-label">Pending approval</div></div>
-    <div class="stat-card"><div class="stat-num">${state.companies.length}</div><div class="stat-label">Companies</div></div>
-    <div class="stat-card"><div class="stat-num">${state.jobs.filter(x => x.status === 'failed').length}</div><div class="stat-label">Failed</div></div>
-  </div>`;
-
-  if (j) {
-    const co = j.company ? state.companies.find(c => c.slug === j.company) : null;
-    const tok = j.usage || { input: 0, output: 0 };
-    const usd = jobCostUsd(j);
-    html += `<div class="detail-section">
-      <h4>Job · <span class="example-band band-${j.band}">Band ${j.band}</span> ${co ? '· ' + co.icon + ' ' + escape(co.name) : ''}</h4>
-      <div class="detail-prompt">${escape(j.prompt)}</div>
-      <div class="cost-stat">
-        ${(MODEL_RATES[j.model] && MODEL_RATES[j.model].label) || j.model} ·
-        ${tok.input} in / ${tok.output} out tokens · $${usd.toFixed(5)} USD
-        ${j.parentJobId ? ' · 🔗 chained from <code>' + j.parentJobId.slice(0, 12) + '…</code>' : ''}
-      </div>
-      <h4>Output</h4>
-      <div class="detail-output" id="liveOutput">${escape(j.output) || '<span style="color:#475569">(streaming...)</span>'}</div>
-      ${j.status === 'awaiting_approval' ? `
-        <div class="approval-actions">
-          <button class="btn-approve" onclick="approveJob('${j.id}')">✓ Approve & log</button>
-          <button class="btn-reject" onclick="rejectJob('${j.id}')">✕ Reject</button>
-        </div>
-      ` : ''}
-      ${(j.status === 'done') ? `
-        <button class="chain-btn" onclick="chainJob('${j.id}')">🔗 Chain to next step →</button>
-      ` : ''}
-      <h4>Audit log</h4>
-      ${j.auditLog.map(a => `<div class="audit-event">
-        <div class="audit-time">${new Date(a.ts).toLocaleTimeString()}</div>
-        <div class="audit-type">${a.event}${a.by ? ' · ' + a.by : ''}${a.parent ? ' · ' + a.parent.slice(0, 12) : ''}${a.error ? ' · ' + escape(a.error) : ''}</div>
-      </div>`).join('')}
-    </div>`;
-  } else {
-    html += `<div class="detail-empty">Click a job on the left to see its full output and audit log.</div>`;
-  }
-  panel.innerHTML = html;
-  // Auto-scroll output if present
-  const out = $('#liveOutput');
-  if (out) out.scrollTop = out.scrollHeight;
-}
-
-function renderAll() {
-  renderHeader();
-  renderRail();
-  renderTemplates();
-  renderJobsList();
-  renderDetail();
-}
-
-// ---------- Live proof ticker (pulls latest commits from 4 production repos) ----------
-const LIVE_REPOS = [
-  { repo: 'dysphagia-knowledge-hub', label: 'softmeal.org', icon: '🍽️' },
-  { repo: 'dse-knowledge-hub', label: 'dsedaquan.cn', icon: '🎓' },
-  { repo: 'medicated-oil-knowledge-hub', label: 'yaoyoudaquan.cn', icon: '💊' },
-  { repo: 'companyforge-mvp', label: 'companyforge.ai', icon: '⚒' },
-];
-let liveProofLoaded = false;
-async function loadLiveProof() {
-  if (liveProofLoaded) return;
-  const listEl = $('#liveProofList');
-  if (!listEl) return;
-  try {
-    const results = await Promise.all(LIVE_REPOS.map(async (r) => {
-      try {
-        const res = await fetch(`https://api.github.com/repos/rayc0/${r.repo}/commits?per_page=1`);
-        if (!res.ok) return null;
-        const json = await res.json();
-        if (!Array.isArray(json) || !json[0]) return null;
-        return { ...r, commit: json[0] };
-      } catch { return null; }
-    }));
-    const valid = results.filter(Boolean);
-    if (!valid.length) {
-      listEl.innerHTML = '<div class="live-proof-empty">GitHub temporarily unavailable — visit <a href="https://github.com/rayc0" target="_blank" rel="noopener">github.com/rayc0</a> to verify.</div>';
-      return;
-    }
-    valid.sort((a, b) => new Date(b.commit.commit.author.date) - new Date(a.commit.commit.author.date));
-    listEl.innerHTML = valid.map(r => {
-      const msg = escapeLiveText(r.commit.commit.message.split('\n')[0]).slice(0, 80);
-      const when = liveTimeAgo(new Date(r.commit.commit.author.date));
-      const url = r.commit.html_url;
-      return `<a class="live-proof-row" href="${url}" target="_blank" rel="noopener">
-        <span class="live-proof-icon">${r.icon}</span>
-        <span class="live-proof-label">${r.label}</span>
-        <span class="live-proof-msg">${msg}</span>
-        <span class="live-proof-when">${when}</span>
-      </a>`;
-    }).join('');
-    liveProofLoaded = true;
-  } catch {
-    listEl.innerHTML = '<div class="live-proof-empty">Could not reach GitHub.</div>';
-  }
-}
-function liveTimeAgo(d) {
-  const s = Math.max(0, (Date.now() - d.getTime()) / 1000);
-  if (s < 60) return 'just now';
-  if (s < 3600) return Math.floor(s / 60) + 'm ago';
-  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
-  return Math.floor(s / 86400) + 'd ago';
-}
-function escapeLiveText(s) {
-  const div = document.createElement('div');
-  div.textContent = s;
-  return div.innerHTML;
-}
-
-// ---------- Event wiring ----------
-function showOnboard() {
-  $('#onboardModal').classList.add('show');
-  setTimeout(() => $('#apiKeyInput').focus(), 100);
-  loadLiveProof();
-}
-function hideOnboard() { $('#onboardModal').classList.remove('show'); }
-function showSettings() {
-  $('#settingsKeyInput').value = state.apiKey || '';
-  $('#tenantIdLabel').textContent = state.tenant;
-  $('#settingsModal').classList.add('show');
-}
-function hideSettings() { $('#settingsModal').classList.remove('show'); }
-
-function toast(msg) {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.style.display = 'none'; }, 2500);
-}
-
-window.approveJob = approveJob;
-window.rejectJob = rejectJob;
-window.chainJob = chainJob;
-
-function wire() {
-  // Onboarding
-  $('#saveKeyBtn').addEventListener('click', async () => {
-    const key = $('#apiKeyInput').value.trim();
-    const errEl = $('#onboardError');
-    errEl.style.display = 'none';
-    if (!key.startsWith('sk-ant-')) {
-      errEl.textContent = 'Anthropic keys start with sk-ant-... Double-check the key.';
-      errEl.style.display = 'block';
-      return;
-    }
-    $('#saveKeyBtn').disabled = true;
-    $('#saveKeyBtn').textContent = 'Validating...';
-    const v = await validateKey(key);
-    $('#saveKeyBtn').disabled = false;
-    $('#saveKeyBtn').textContent = 'Continue →';
-    if (!v.ok) {
-      errEl.textContent = v.err;
-      errEl.style.display = 'block';
-      return;
-    }
-    state.apiKey = key;
-    saveKey();
-    hideOnboard();
-    toast('Welcome. Your key is saved in this browser only.');
-    renderAll();
-  });
-  $('#apiKeyInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#saveKeyBtn').click(); });
-
-  // Settings
-  $('#settingsBtn').addEventListener('click', showSettings);
-  $('#settingsClose').addEventListener('click', hideSettings);
-  $('#settingsSave').addEventListener('click', () => {
-    const k = $('#settingsKeyInput').value.trim();
-    if (k) { state.apiKey = k; saveKey(); toast('Saved'); }
-    hideSettings();
-  });
-  $('#exportBtn').addEventListener('click', () => {
-    const data = { tenant: state.tenant, exported: new Date().toISOString(), companies: state.companies, jobs: state.jobs };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'companyforge-' + state.tenant + '.json';
-    a.click();
-  });
-  $('#exportCsvBtn').addEventListener('click', () => { exportCsv(); toast('CSV downloaded'); });
-  $('#clearBtn').addEventListener('click', () => {
-    if (!confirm('Clear ALL data — companies, jobs, and API key — for this tenant? This cannot be undone.')) return;
-    Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
-    location.reload();
-  });
-
-  // Add company
-  $('#addCoBtn').addEventListener('click', () => $('#addCoModal').classList.add('show'));
-  $('#addCoCancel').addEventListener('click', () => $('#addCoModal').classList.remove('show'));
-  $('#addCoSave').addEventListener('click', () => {
-    const name = $('#addCoName').value.trim();
-    const icon = $('#addCoIcon').value.trim() || '🏢';
-    const memory = $('#addCoMemory').value.trim();
-    if (!name || !memory) { toast('Name and memory are required'); return; }
-    const slug = 'c_' + Math.random().toString(36).slice(2, 8);
-    state.companies.push({ slug, name, icon, color: '#6366f1', memory });
-    saveCompanies();
-    $('#addCoModal').classList.remove('show');
-    $('#addCoName').value = ''; $('#addCoIcon').value = ''; $('#addCoMemory').value = '';
-    state.selectedCoSlug = slug;
-    localStorage.setItem(STORAGE_KEYS.selectedCo, slug);
-    renderAll();
-    toast('Company added');
-  });
-
-  // Task input
-  const inp = $('#taskInput');
-  const send = () => {
-    const v = inp.value.trim();
-    if (!v) return;
-    if (!state.apiKey) { showOnboard(); return; }
-    const parentId = inp.dataset.parentId || null;
-    createJob(v, $('#modelSelect').value, state.selectedCoSlug, parentId);
-    inp.value = '';
-    inp.style.height = 'auto';
-    delete inp.dataset.parentId;
-  };
-  $('#sendBtn').addEventListener('click', send);
-  inp.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); send(); }
-  });
-  inp.addEventListener('input', () => {
-    inp.style.height = 'auto';
-    inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
-  });
-
-  // v0.2: Filter pills
-  document.querySelectorAll('.filter-pill').forEach(p => {
-    p.addEventListener('click', () => {
-      state.jobFilter = p.dataset.filter;
-      renderJobsList();
-    });
-  });
-
-  // v0.2: Search
-  $('#searchInput').addEventListener('input', (e) => {
-    state.searchTerm = e.target.value.trim();
-    renderJobsList();
-  });
-
-  // v0.2: Mobile rail/detail toggles
-  const rail = document.querySelector('aside.rail');
-  const detail = document.querySelector('aside.detail');
-  const backdrop = $('#mobileBackdrop');
-  $('#railToggle').addEventListener('click', () => {
-    rail.classList.toggle('open');
-    backdrop.classList.toggle('show', rail.classList.contains('open'));
-  });
-  backdrop.addEventListener('click', () => {
-    rail.classList.remove('open');
-    detail.classList.remove('open');
-    backdrop.classList.remove('show');
-  });
-  // On mobile, tapping a job opens the detail panel
-  document.addEventListener('click', (e) => {
-    const card = e.target.closest && e.target.closest('.job-card');
-    if (card && window.innerWidth <= 900) {
-      detail.classList.add('open');
-      backdrop.classList.add('show');
-    }
-  });
-}
-
-// ---------- Boot ----------
-load();
-wire();
-renderAll();
-if (!state.apiKey) showOnboard();
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
 </script>
 </body>
 </html>
